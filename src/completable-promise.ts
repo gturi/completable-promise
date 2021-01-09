@@ -4,21 +4,21 @@ import { DeferredPromise } from "./deferred-promise";
 
 export class CompletablePromise<T = any> {
 
-  protected completablePromise!: DeferredPromise<T>;
+  protected deferredPromise!: DeferredPromise<T>;
   private readonly promise: Promise<T>;
 
   constructor() {
     this.promise = new Promise<T>((resolve, reject) => {
-      this.completablePromise = { resolve: resolve, reject: reject };
+      this.deferredPromise = { resolve: resolve, reject: reject };
     });
   }
 
   resolve(value: T | PromiseLike<T>): void {
-    this.completablePromise.resolve(value);
+    this.deferredPromise.resolve(value);
   }
 
   reject(reason: any): void {
-    this.completablePromise.reject(reason);
+    this.deferredPromise.reject(reason);
   }
 
   then<TResult1 = T, TResult2 = never>(
