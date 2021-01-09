@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/explicit-module-boundary-types */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeferredPromise } from "./deferred-promise";
 
 export class CompletablePromise<T = any> {
@@ -11,11 +13,11 @@ export class CompletablePromise<T = any> {
     });
   }
 
-  resolve(value: T) {
+  resolve(value: T): void {
     this.completablePromise.resolve(value);
   }
 
-  reject(reason: any) {
+  reject(reason: any): void {
     this.completablePromise.reject(reason);
   }
 
@@ -27,7 +29,7 @@ export class CompletablePromise<T = any> {
     return this.promise.catch(onrejected);
   }
 
-  get() {
+  get(): Promise<T> {
     return this.promise;
   }
 }
