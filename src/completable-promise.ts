@@ -13,7 +13,7 @@ export class CompletablePromise<T = any> {
     });
   }
 
-  resolve(value: T): void {
+  resolve(value: T | PromiseLike<T>): void {
     this.completablePromise.resolve(value);
   }
 
