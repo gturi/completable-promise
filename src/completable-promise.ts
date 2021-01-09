@@ -13,14 +13,31 @@ export class CompletablePromise<T = any> {
     });
   }
 
+  /**
+   * Resolves the promise with a value or the result of another promise.
+   * 
+   * @param value The value or the result of another promise.
+   */
   resolve(value: T | PromiseLike<T>): void {
     this.deferredPromise.resolve(value);
   }
 
+  /**
+   * Rejects the promise with a provided reason or error.
+   * 
+   * @param reason The reason or error.
+   */
   reject(reason: any): void {
     this.deferredPromise.reject(reason);
   }
 
+  /**
+   * Attaches callbacks for the resolution and/or rejection of the Promise.
+   * 
+   * @param onfulfilled The callback to execute when the Promise is resolved.
+   * @param onrejected The callback to execute when the Promise is rejected.
+   * @returns A Promise for the completion of which ever callback is executed.
+   */
   then<TResult1 = T, TResult2 = never>(
     onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null | undefined,
     onrejected?: ((reason: any) => TResult2 | PromiseLike<TResult2>) | undefined | null
@@ -28,6 +45,12 @@ export class CompletablePromise<T = any> {
     return this.promise.then(onfulfilled, onrejected);
   }
 
+  /**
+   * Attaches a callback for only the rejection of the Promise.
+   * 
+   * @param onrejected The callback to execute when the Promise is rejected.
+   * @returns A Promise for the completion of the callback.
+   */
   catch<TResult = never>(
     onrejected?: ((reason: any) => TResult | PromiseLike<TResult>) | undefined | null
   ): Promise<T | TResult> {
