@@ -1,1 +1,1 @@
-export { CompletablPromise } from './completable-promise';
+export { CompletablePromise } from './completable-promise';
