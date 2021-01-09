@@ -21,7 +21,7 @@ export class CompletablePromise<T = any> {
     this.completablePromise.reject(reason);
   }
 
-  then(onfulfilled?: ((value: T) => T | PromiseLike<T>) | null | undefined): Promise<T> {
+  then<TResult1 = T, TResult2 = never>(onfulfilled?: ((value: T) => TResult1 | PromiseLike<TResult1>) | null | undefined): Promise<TResult1 | TResult2> {
     return this.promise.then(onfulfilled);
   }
 
