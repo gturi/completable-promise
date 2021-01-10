@@ -4,6 +4,12 @@ import { CompletablePromise } from '../src/index';
 
 describe('CompletablePromise', () => {
 
+  const errorMessage = 'something went wrong';
+
+  const throwUnreachableCodeException = (value = '') => {
+    throw new Error(`code should not be reached ${value}`);
+  }
+
   describe('#resolve', () => {
     it('should return the value to the chained promise', (done) => {
       const number = 5;
@@ -45,6 +51,46 @@ describe('CompletablePromise', () => {
       }).catch(reason => {
         expect(reason).to.equal(errorMessage);
         done();
+      });
+
+      promise.reject(errorMessage);
+    });
+  });
+
+  describe('#then', () => {
+    it('should ignore onrejected callback when using #resolve', (done) => {
+      const promise = new CompletablePromise();
+
+      promise.then(value => {
+        expect(value).to.equal('foo');
+        // eslint-disable-next-line @typescript-eslint/no-unused-vars
+        return new Promise((resolve, reject) => {
+          resolve('bar');
+        });
+      }, () => {
+        throwUnreachableCodeException('in first onrejected');
+      }).then(value => {
+        expect(value).to.equal('bar');
+        done();
+      }, () => {
+        throwUnreachableCodeException('in second onrejected');
+      });
+
+      promise.resolve('foo');
+    });
+
+    it('should ignore onfulfilled callback when using #reject', (done) => {
+      const promise = new CompletablePromise();
+
+      promise.then(() => {
+        throwUnreachableCodeException('in first onfulfilled');
+      }, reason => {
+        expect(reason).to.equal(errorMessage);
+        done();
+      }).then(() => {
+        throwUnreachableCodeException('in second onfulfilled');
+      }, () => {
+        throwUnreachableCodeException('in second onrejected');
       });
 
       promise.reject(errorMessage);
