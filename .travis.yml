@@ -9,30 +9,34 @@ script:
 
 before_deploy:
   - npm run travis-deploy $TRAVIS_BRANCH
-  - cat "gh-pages/$TRAVIS_BRANCH/coverage/lcov.info" | npm run coveralls
+  - cat "gh-pages/$TRAVIS_BRANCH/coverage/lcov.info" | npx coveralls
 
-# For security reasons, deployment variables are set in the settings page of the repository
-deploy:
-  - provider: pages
-    skip_cleanup: true
-    github_token: $GITHUB_TOKEN
-    keep_history: true
-    local_dir: gh-pages
-    on:
-      branch:
-        - main
-        - develop
-  - provider: releases
-    skip_cleanup: true
-    api_key: $GITHUB_TOKEN
-    draft: true
-    on:
-      branch: main
-      tags: true
-  - provider: npm
-    skip_cleanup: true
-    email: "giacomo.venturini3@gmail.com"
-    api_key: $NPM_TOKEN
-    on:
-      branch: main
-      tags: true
+jobs:
+  include:
+    - stage: deployment
+      node_js: node
+      # For security reasons, deployment variables are set in the settings page of the repository
+      deploy:
+        - provider: pages
+          skip_cleanup: true
+          github_token: $GITHUB_TOKEN
+          keep_history: true
+          local_dir: gh-pages
+          on:
+            branch:
+              - main
+              - develop
+        - provider: releases
+          skip_cleanup: true
+          api_key: $GITHUB_TOKEN
+          draft: true
+          on:
+            branch: main
+            tags: true
+        - provider: npm
+          skip_cleanup: true
+          email: "giacomo.venturini3@gmail.com"
+          api_key: $NPM_TOKEN
+          on:
+            branch: main
+            tags: true
