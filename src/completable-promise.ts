@@ -82,6 +82,11 @@ export class CompletablePromise<T = any> {
     return this.promise.finally(onfinally);
   }
 
+  /**
+   * Returns the inner Promise.
+   * 
+   * @returns The inner Promise.
+   */
   get(): Promise<T> {
     return this.promise;
   }
