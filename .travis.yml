@@ -18,7 +18,7 @@ jobs:
       # For security reasons, deployment variables are set in the settings page of the repository
       deploy:
         - provider: pages
-          cleanup: false
+          skip_cleanup: true
           github_token: $GITHUB_TOKEN
           keep_history: true
           local_dir: gh-pages
@@ -27,14 +27,14 @@ jobs:
               - main
               - develop
         - provider: releases
-          cleanup: false
+          skip_cleanup: true
           api_key: $GITHUB_TOKEN
           draft: true
           on:
             branch: main
             tags: true
         - provider: npm
-          cleanup: false
+          skip_cleanup: true
           email: "giacomo.venturini3@gmail.com"
           api_key: $NPM_TOKEN
           on:
