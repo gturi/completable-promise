@@ -11,7 +11,7 @@ describe('CompletablePromise', () => {
   }
 
   describe('#resolve', () => {
-    it('should return the value to the chained promise', (done) => {
+    it('should return the value to the chained promise', done => {
       const number = 5;
       const promise = new CompletablePromise();
 
@@ -23,7 +23,7 @@ describe('CompletablePromise', () => {
       promise.resolve(number);
     });
 
-    it('should respect asynchronous behaviour', (done) => {
+    it('should respect asynchronous behaviour', done => {
       const array = ['foo'];
       const promise = new CompletablePromise<string[]>();
 
@@ -42,7 +42,7 @@ describe('CompletablePromise', () => {
   });
 
   describe('#reject', () => {
-    it('should return the value to the chained promise', (done) => {
+    it('should return the value to the chained promise', done => {
       const errorMessage = 'something went wrong';
       const promise = new CompletablePromise();
 
@@ -58,7 +58,7 @@ describe('CompletablePromise', () => {
   });
 
   describe('#then', () => {
-    it('should ignore onrejected callback when using #resolve', (done) => {
+    it('should ignore onrejected callback when using #resolve', done => {
       const promise = new CompletablePromise();
 
       promise.then(value => {
@@ -79,7 +79,7 @@ describe('CompletablePromise', () => {
       promise.resolve('foo');
     });
 
-    it('should ignore onfulfilled callback when using #reject', (done) => {
+    it('should ignore onfulfilled callback when using #reject', done => {
       const promise = new CompletablePromise();
 
       promise.then(() => {
