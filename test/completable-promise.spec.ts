@@ -115,4 +115,19 @@ describe('CompletablePromise', () => {
     });
   });
 
+  describe('#get', () => {
+    it('should return the inner promise, allowing using Promise static methods', done => {
+      const fooPromise = new CompletablePromise();
+      const barPromise = new CompletablePromise();
+
+      fooPromise.resolve('foo');
+      barPromise.resolve('bar');
+
+      Promise.all([fooPromise.get(), barPromise.get()]).then(values => {
+        expect(values).to.eql(['foo', 'bar']);
+        done();
+      });
+    });
+  });
+
 });
