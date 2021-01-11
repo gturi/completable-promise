@@ -96,4 +96,23 @@ describe('CompletablePromise', () => {
       promise.reject(errorMessage);
     });
   });
+
+  describe('#finally', () => {
+    it('should work with when the promise is resolved', done => {
+      const promise = new CompletablePromise();
+
+      promise.finally(done);
+
+      promise.resolve('success');
+    });
+
+    it('should work with when the promise is rejected', done => {
+      const promise = new CompletablePromise();
+
+      promise.finally(done);
+
+      promise.reject(errorMessage);
+    });
+  });
+
 });
