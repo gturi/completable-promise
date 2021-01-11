@@ -71,6 +71,17 @@ export class CompletablePromise<T = any> {
     return this.promise.catch(onrejected);
   }
 
+  /**
+   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
+   * resolved value cannot be modified from the callback.
+   *
+   * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
+   * @returns A Promise for the completion of the callback.
+   */
+  finally(onfinally?: (() => void) | undefined | null): Promise<T> {
+    return this.promise.finally(onfinally);
+  }
+
   get(): Promise<T> {
     return this.promise;
   }

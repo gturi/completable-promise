@@ -9,7 +9,10 @@
     "noEmit": false,
     "outDir": "dist",
     "sourceMap": true,
-    "declaration": true
+    "declaration": true,
+    "lib": [
+      "es2018"
+    ]
   },
   "include": [
     "src/**/*"
