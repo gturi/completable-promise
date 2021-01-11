@@ -23,6 +23,20 @@ export class CompletablePromise<T = any> {
   }
 
   /**
+   * Attempts to {@link resolve} the promise with a value or the result of another promise.
+   * If retrieving {@param getValue} result fails, {@link reject} function will be called instead.
+   * 
+   * @param getValue A function that returns the value or the result of another promise.
+   */
+  tryResolve(getValue: () => T | PromiseLike<T>): void {
+    try {
+      this.deferredPromise.resolve(getValue());
+    } catch (error) {
+      this.deferredPromise.reject(error);
+    }
+  }
+
+  /**
    * Rejects the promise with a provided reason or error.
    * 
    * @param reason The reason or error.
