@@ -11,7 +11,7 @@ describe('CompletablePromise', () => {
   }
 
   describe('#resolve', () => {
-    it('should return the value to the chained promise', done => {
+    it('should return the value to `then` handler', done => {
       const number = 5;
       const promise = new CompletablePromise();
 
@@ -42,7 +42,19 @@ describe('CompletablePromise', () => {
   });
 
   describe('#reject', () => {
-    it('should return the value to the chained promise', done => {
+    it('should return the error to `catch` handler', done => {
+      const errorMessage = 'something went wrong';
+      const promise = new CompletablePromise();
+
+      promise.catch(reason => {
+        expect(reason).to.equal(errorMessage);
+        done();
+      });
+
+      promise.reject(errorMessage);
+    });
+
+    it('should return the value to `catch` handler of the chained promise', done => {
       const errorMessage = 'something went wrong';
       const promise = new CompletablePromise();
 
