@@ -6,7 +6,7 @@ describe('CompletablePromise', () => {
 
   const errorMessage = 'something went wrong';
 
-  const throwUnreachableCodeException = (value = '') => {
+  const throwUnreachableCodeException = (/* istanbul ignore next */ value = '') => {
     throw new Error(`code should not be reached ${value}`);
   }
 
@@ -49,7 +49,7 @@ describe('CompletablePromise', () => {
       promise.then(value => {
         expect(value).to.eql({'foo': 'bar'});
         done();
-      }).catch(() => {
+      }).catch(/* istanbul ignore next */ () => {
         throwUnreachableCodeException();
       });
 
@@ -60,7 +60,7 @@ describe('CompletablePromise', () => {
       const brokenJsonString = '{"foo":"bar"';
       const promise = new CompletablePromise();
 
-      promise.then(() => {
+      promise.then(/* istanbul ignore next */ () => {
         throwUnreachableCodeException();
       }).catch(reason => {
         expect(reason.name).to.equal('SyntaxError');
@@ -89,7 +89,7 @@ describe('CompletablePromise', () => {
       const errorMessage = 'something went wrong';
       const promise = new CompletablePromise();
 
-      promise.then(() => {
+      promise.then(/* istanbul ignore next */ () => {
         throwUnreachableCodeException();
       }).catch(reason => {
         expect(reason).to.equal(errorMessage);
@@ -110,12 +110,12 @@ describe('CompletablePromise', () => {
         return new Promise((resolve, reject) => {
           resolve('bar');
         });
-      }, () => {
+      },/* istanbul ignore next */ () => {
         throwUnreachableCodeException('in first onrejected');
       }).then(value => {
         expect(value).to.equal('bar');
         done();
-      }, () => {
+      },/* istanbul ignore next */ () => {
         throwUnreachableCodeException('in second onrejected');
       });
 
@@ -125,14 +125,14 @@ describe('CompletablePromise', () => {
     it('should ignore onfulfilled callback when using #reject', done => {
       const promise = new CompletablePromise();
 
-      promise.then(() => {
+      promise.then(/* istanbul ignore next */ () => {
         throwUnreachableCodeException('in first onfulfilled');
       }, reason => {
         expect(reason).to.equal(errorMessage);
         done();
-      }).then(() => {
+      }).then(/* istanbul ignore next */ () => {
         throwUnreachableCodeException('in second onfulfilled');
-      }, () => {
+      },/* istanbul ignore next */ () => {
         throwUnreachableCodeException('in second onrejected');
       });
 
