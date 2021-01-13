@@ -41,6 +41,37 @@ describe('CompletablePromise', () => {
     });
   });
 
+  describe('#tryResolve', () => {
+    it('should return the error to `catch` handler', done => {
+      const jsonString = '{"foo":"bar"}';
+      const promise = new CompletablePromise();
+
+      promise.then(value => {
+        expect(value).to.eql({'foo': 'bar'});
+        done();
+      }).catch(() => {
+        throwUnreachableCodeException();
+      });
+
+      promise.tryResolve(() => JSON.parse(jsonString));
+    });
+
+    it('should return the error to `catch` handler', done => {
+      const brokenJsonString = '{"foo":"bar"';
+      const promise = new CompletablePromise();
+
+      promise.then(() => {
+        throwUnreachableCodeException();
+      }).catch(reason => {
+        expect(reason.name).to.equal('SyntaxError');
+        expect(reason.message).to.equal('Unexpected end of JSON input');
+        done();
+      });
+
+      promise.tryResolve(() => JSON.parse(brokenJsonString));
+    });
+  });
+
   describe('#reject', () => {
     it('should return the error to `catch` handler', done => {
       const errorMessage = 'something went wrong';
@@ -59,7 +90,7 @@ describe('CompletablePromise', () => {
       const promise = new CompletablePromise();
 
       promise.then(() => {
-        throw new Error('code should not be reached');
+        throwUnreachableCodeException();
       }).catch(reason => {
         expect(reason).to.equal(errorMessage);
         done();
