@@ -26,6 +26,8 @@ export class CompletablePromise<T = any> {
 
   /**
    * Resolves the promise with a value or the result of another promise.
+   * This method call will succeed only if the promise was in Pending state,
+   * and it will irreversibly change the promise state to Fulfilled.
    * 
    * @param value The value or the result of another promise.
    */
@@ -35,6 +37,8 @@ export class CompletablePromise<T = any> {
 
   /**
    * Rejects the promise with a provided reason or error.
+   * This method call will succeed only if the promise was in Pending state,
+   * and it will irreversibly change the promise state to Rejected.
    * 
    * @param reason The reason or error.
    */
@@ -100,5 +104,23 @@ export class CompletablePromise<T = any> {
    */
   get(): Promise<T> {
     return this.promise;
+  }
+
+  /**
+   * Returns the current promise state.
+   * 
+   * @returns The current promise state.
+   */
+  getState(): State {
+    return this.state;
+  }
+
+  /**
+   * Returns true if the promise state it is either fulfilled or rejected.
+   * 
+   * @returns whether the promise state it is either fulfilled or rejected.
+   */
+  isSettled(): boolean {
+    return this.state !== State.Pending;
   }
 }
