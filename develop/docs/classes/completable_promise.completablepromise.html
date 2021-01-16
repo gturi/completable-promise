@@ -99,6 +99,7 @@
 							<ul class="tsd-index-list">
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="completable_promise.completablepromise.html#deferredpromise" class="tsd-kind-icon">deferred<wbr>Promise</a></li>
 								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><a href="completable_promise.completablepromise.html#promise" class="tsd-kind-icon">promise</a></li>
+								<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><a href="completable_promise.completablepromise.html#state" class="tsd-kind-icon">state</a></li>
 							</ul>
 						</section>
 						<section class="tsd-index-section ">
@@ -107,6 +108,12 @@
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="completable_promise.completablepromise.html#catch" class="tsd-kind-icon">catch</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#finally" class="tsd-kind-icon">finally</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#get" class="tsd-kind-icon">get</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#getstate" class="tsd-kind-icon">get<wbr>State</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#isfulfilled" class="tsd-kind-icon">is<wbr>Fulfilled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#ispending" class="tsd-kind-icon">is<wbr>Pending</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#isrejected" class="tsd-kind-icon">is<wbr>Rejected</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#issettled" class="tsd-kind-icon">is<wbr>Settled</a></li>
+								<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><a href="completable_promise.completablepromise.html#makedeferredoperation" class="tsd-kind-icon">make<wbr>Deferred<wbr>Operation</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#reject" class="tsd-kind-icon">reject</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class"><a href="completable_promise.completablepromise.html#resolve" class="tsd-kind-icon">resolve</a></li>
 								<li class="tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter"><a href="completable_promise.completablepromise.html#then" class="tsd-kind-icon">then</a></li>
@@ -128,7 +135,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L8">completable-promise.ts:8</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L12">completable-promise.ts:12</a></li>
 								</ul>
 							</aside>
 							<h4 class="tsd-type-parameters-title">Type parameters</h4>
@@ -150,7 +157,7 @@
 					<div class="tsd-signature tsd-kind-icon">deferred<wbr>Promise<span class="tsd-signature-symbol">:</span> <a href="../interfaces/deferred_promise.deferredpromise.html" class="tsd-signature-type" data-tsd-kind="Interface">DeferredPromise</a><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L7">completable-promise.ts:7</a></li>
+							<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L11">completable-promise.ts:11</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -160,7 +167,17 @@
 					<div class="tsd-signature tsd-kind-icon">promise<span class="tsd-signature-symbol">:</span> <span class="tsd-signature-type">Promise</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></div>
 					<aside class="tsd-sources">
 						<ul>
-							<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L8">completable-promise.ts:8</a></li>
+							<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L12">completable-promise.ts:12</a></li>
+						</ul>
+					</aside>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+					<a name="state" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagProtected">Protected</span> state</h3>
+					<div class="tsd-signature tsd-kind-icon">state<span class="tsd-signature-symbol">:</span> <a href="../enums/state.state-1.html" class="tsd-signature-type" data-tsd-kind="Enumeration">State</a><span class="tsd-signature-symbol"> = ...</span></div>
+					<aside class="tsd-sources">
+						<ul>
+							<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L10">completable-promise.ts:10</a></li>
 						</ul>
 					</aside>
 				</section>
@@ -177,7 +194,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L68">completable-promise.ts:68</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L83">completable-promise.ts:83</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -215,7 +232,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L81">completable-promise.ts:81</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L96">completable-promise.ts:96</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -248,7 +265,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L90">completable-promise.ts:90</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L105">completable-promise.ts:105</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -262,6 +279,147 @@
 					</ul>
 				</section>
 				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="getstate" class="tsd-anchor"></a>
+					<h3>get<wbr>State</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">get<wbr>State<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><a href="../enums/state.state-1.html" class="tsd-signature-type" data-tsd-kind="Enumeration">State</a></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L114">completable-promise.ts:114</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns the current promise state.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <a href="../enums/state.state-1.html" class="tsd-signature-type" data-tsd-kind="Enumeration">State</a></h4>
+							<p>The current promise state.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isfulfilled" class="tsd-anchor"></a>
+					<h3>is<wbr>Fulfilled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Fulfilled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L132">completable-promise.ts:132</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the promise state it is State.Fulfilled.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>whether the promise state it is State.Fulfilled.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="ispending" class="tsd-anchor"></a>
+					<h3>is<wbr>Pending</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Pending<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L123">completable-promise.ts:123</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the promise state it is State.Pending.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>whether the promise state it is State.Pending.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="isrejected" class="tsd-anchor"></a>
+					<h3>is<wbr>Rejected</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Rejected<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L141">completable-promise.ts:141</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the promise state it is State.Rejected.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>whether the promise state it is State.Rejected.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
+					<a name="issettled" class="tsd-anchor"></a>
+					<h3>is<wbr>Settled</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
+						<li class="tsd-signature tsd-kind-icon">is<wbr>Settled<span class="tsd-signature-symbol">(</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">boolean</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L150">completable-promise.ts:150</a></li>
+								</ul>
+							</aside>
+							<div class="tsd-comment tsd-typography">
+								<div class="lead">
+									<p>Returns true if the promise state it is either State.Fulfilled or State.Rejected.</p>
+								</div>
+							</div>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">boolean</span></h4>
+							<p>whether the promise state it is either State.Fulfilled or State.Rejected.</p>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class tsd-is-private">
+					<a name="makedeferredoperation" class="tsd-anchor"></a>
+					<h3><span class="tsd-flag ts-flagPrivate">Private</span> make<wbr>Deferred<wbr>Operation</h3>
+					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class tsd-is-private">
+						<li class="tsd-signature tsd-kind-icon">make<wbr>Deferred<wbr>Operation<span class="tsd-signature-symbol">(</span>newState<span class="tsd-signature-symbol">: </span><a href="../enums/state.state-1.html" class="tsd-signature-type" data-tsd-kind="Enumeration">State</a>, deferredOperation<span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">DeferredOperation</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span><span class="tsd-signature-symbol">)</span><span class="tsd-signature-symbol">: </span><span class="tsd-signature-type">void</span></li>
+					</ul>
+					<ul class="tsd-descriptions">
+						<li class="tsd-description">
+							<aside class="tsd-sources">
+								<ul>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L20">completable-promise.ts:20</a></li>
+								</ul>
+							</aside>
+							<h4 class="tsd-parameters-title">Parameters</h4>
+							<ul class="tsd-parameters">
+								<li>
+									<h5>newState: <a href="../enums/state.state-1.html" class="tsd-signature-type" data-tsd-kind="Enumeration">State</a></h5>
+								</li>
+								<li>
+									<h5>deferredOperation: <span class="tsd-signature-type">DeferredOperation</span><span class="tsd-signature-symbol">&lt;</span><span class="tsd-signature-type">T</span><span class="tsd-signature-symbol">&gt;</span></h5>
+								</li>
+							</ul>
+							<h4 class="tsd-returns-title">Returns <span class="tsd-signature-type">void</span></h4>
+						</li>
+					</ul>
+				</section>
+				<section class="tsd-panel tsd-member tsd-kind-method tsd-parent-kind-class">
 					<a name="reject" class="tsd-anchor"></a>
 					<h3>reject</h3>
 					<ul class="tsd-signatures tsd-kind-method tsd-parent-kind-class">
@@ -271,12 +429,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L44">completable-promise.ts:44</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L45">completable-promise.ts:45</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Rejects the promise with a provided reason or error.</p>
+									<p>Rejects the promise with a provided reason or error.
+										This method call will succeed only if the promise was in Pending state,
+									and it will irreversibly change the promise state to Rejected.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -302,12 +462,14 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L21">completable-promise.ts:21</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L34">completable-promise.ts:34</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
 								<div class="lead">
-									<p>Resolves the promise with a value or the result of another promise.</p>
+									<p>Resolves the promise with a value or the result of another promise.
+										This method call will succeed only if the promise was in Pending state,
+									and it will irreversibly change the promise state to Fulfilled.</p>
 								</div>
 							</div>
 							<h4 class="tsd-parameters-title">Parameters</h4>
@@ -333,7 +495,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L55">completable-promise.ts:55</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L70">completable-promise.ts:70</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -380,7 +542,7 @@
 						<li class="tsd-description">
 							<aside class="tsd-sources">
 								<ul>
-									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/1e27340/src/completable-promise.ts#L31">completable-promise.ts:31</a></li>
+									<li>Defined in <a href="https://github.com/FlamingTuri/completable-promise/blob/7019960/src/completable-promise.ts#L55">completable-promise.ts:55</a></li>
 								</ul>
 							</aside>
 							<div class="tsd-comment tsd-typography">
@@ -431,6 +593,9 @@
 					<li class=" tsd-kind-module">
 						<a href="../modules/index.html">index</a>
 					</li>
+					<li class=" tsd-kind-module">
+						<a href="../modules/state.html">state</a>
+					</li>
 				</ul>
 			</nav>
 			<nav class="tsd-navigation secondary menu-sticky">
@@ -449,6 +614,9 @@
 							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-private">
 								<a href="completable_promise.completablepromise.html#promise" class="tsd-kind-icon">promise</a>
 							</li>
+							<li class=" tsd-kind-property tsd-parent-kind-class tsd-is-protected">
+								<a href="completable_promise.completablepromise.html#state" class="tsd-kind-icon">state</a>
+							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class tsd-has-type-parameter">
 								<a href="completable_promise.completablepromise.html#catch" class="tsd-kind-icon">catch</a>
 							</li>
@@ -457,6 +625,24 @@
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="completable_promise.completablepromise.html#get" class="tsd-kind-icon">get</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="completable_promise.completablepromise.html#getstate" class="tsd-kind-icon">get<wbr>State</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="completable_promise.completablepromise.html#isfulfilled" class="tsd-kind-icon">is<wbr>Fulfilled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="completable_promise.completablepromise.html#ispending" class="tsd-kind-icon">is<wbr>Pending</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="completable_promise.completablepromise.html#isrejected" class="tsd-kind-icon">is<wbr>Rejected</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class">
+								<a href="completable_promise.completablepromise.html#issettled" class="tsd-kind-icon">is<wbr>Settled</a>
+							</li>
+							<li class=" tsd-kind-method tsd-parent-kind-class tsd-is-private">
+								<a href="completable_promise.completablepromise.html#makedeferredoperation" class="tsd-kind-icon">make<wbr>Deferred<wbr>Operation</a>
 							</li>
 							<li class=" tsd-kind-method tsd-parent-kind-class">
 								<a href="completable_promise.completablepromise.html#reject" class="tsd-kind-icon">reject</a>
@@ -488,13 +674,17 @@
 				<li class="tsd-kind-method tsd-parent-kind-class"><span class="tsd-kind-icon">Method</span></li>
 			</ul>
 			<ul class="tsd-legend">
+				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
+				<li class="tsd-kind-method tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private method</span></li>
+			</ul>
+			<ul class="tsd-legend">
+				<li class="tsd-kind-enum"><span class="tsd-kind-icon">Enumeration</span></li>
+			</ul>
+			<ul class="tsd-legend">
 				<li class="tsd-kind-interface tsd-has-type-parameter"><span class="tsd-kind-icon">Interface with type parameter</span></li>
 			</ul>
 			<ul class="tsd-legend">
 				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-protected"><span class="tsd-kind-icon">Protected property</span></li>
-			</ul>
-			<ul class="tsd-legend">
-				<li class="tsd-kind-property tsd-parent-kind-class tsd-is-private"><span class="tsd-kind-icon">Private property</span></li>
 			</ul>
 		</div>
 	</div>
