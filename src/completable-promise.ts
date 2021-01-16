@@ -5,6 +5,11 @@ import { State } from "./state";
 
 type DeferredOperation<T> = (deferredPromise: DeferredPromise<T>) => void;
 
+/**
+ * A {@link Promise} that can be explicitly resolved or rejected.
+ * 
+ * @type T the type of the {@link CompletablePromise}.
+ */
 export class CompletablePromise<T = any> {
 
   protected state: State = State.Pending;
@@ -17,6 +22,14 @@ export class CompletablePromise<T = any> {
     });
   }
 
+  /**
+   * Calls the specified deferredOperation if the {@link CompletablePromise} state is
+   * {@link State.Pending}. Then sets the {@link CompletablePromise} state to the
+   * specified one.
+   * 
+   * @param newState the new state assigned to the {@link CompletablePromise}.
+   * @param deferredOperation the method of the {@link DeferredPromise} that should be called.
+   */
   private makeDeferredOperation(newState: State, deferredOperation: DeferredOperation<T>) {
     if (this.isPending()) {
       deferredOperation(this.deferredPromise);
