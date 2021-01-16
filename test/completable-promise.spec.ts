@@ -56,37 +56,6 @@ describe('CompletablePromise', () => {
     });
   });
 
-  describe('#tryResolve', () => {
-    it('should return the value to `then` handler when getValue succeeds', done => {
-      const jsonString = '{"foo":"bar"}';
-      const promise = new CompletablePromise();
-
-      promise.then(value => {
-        expect(value).to.eql({ 'foo': 'bar' });
-        done();
-      }).catch(/* istanbul ignore next */() => {
-        throwUnreachableCodeException();
-      });
-
-      promise.tryResolve(() => JSON.parse(jsonString));
-    });
-
-    it('should return the failure reason to `catch` handler when getValue fails', done => {
-      const brokenJsonString = '{"foo":"bar"';
-      const promise = new CompletablePromise();
-
-      promise.then(/* istanbul ignore next */() => {
-        throwUnreachableCodeException();
-      }).catch(reason => {
-        expect(reason.name).to.equal('SyntaxError');
-        expect(reason.message).to.equal('Unexpected end of JSON input');
-        done();
-      });
-
-      promise.tryResolve(() => JSON.parse(brokenJsonString));
-    });
-  });
-
   describe('#reject', () => {
     it('should return the error to `catch` handler', done => {
       const errorMessage = 'something went wrong';
@@ -127,6 +96,37 @@ describe('CompletablePromise', () => {
       }).catch(reason => {
         expect(reason).to.equal(errorMessage);
       }).finally(done);
+    });
+  });
+
+  describe('#tryResolve', () => {
+    it('should return the value to `then` handler when getValue succeeds', done => {
+      const jsonString = '{"foo":"bar"}';
+      const promise = new CompletablePromise();
+
+      promise.then(value => {
+        expect(value).to.eql({ 'foo': 'bar' });
+        done();
+      }).catch(/* istanbul ignore next */() => {
+        throwUnreachableCodeException();
+      });
+
+      promise.tryResolve(() => JSON.parse(jsonString));
+    });
+
+    it('should return the failure reason to `catch` handler when getValue fails', done => {
+      const brokenJsonString = '{"foo":"bar"';
+      const promise = new CompletablePromise();
+
+      promise.then(/* istanbul ignore next */() => {
+        throwUnreachableCodeException();
+      }).catch(reason => {
+        expect(reason.name).to.equal('SyntaxError');
+        expect(reason.message).to.equal('Unexpected end of JSON input');
+        done();
+      });
+
+      promise.tryResolve(() => JSON.parse(brokenJsonString));
     });
   });
 
