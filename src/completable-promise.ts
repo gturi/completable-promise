@@ -1,9 +1,13 @@
 /* eslint-disable @typescript-eslint/explicit-module-boundary-types */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { DeferredPromise } from "./deferred-promise";
+import { State } from "./state";
+
+type DeferredOperation<T> = (deferredPromise: DeferredPromise<T>) => void;
 
 export class CompletablePromise<T = any> {
 
+  protected state: State = State.Pending;
   protected deferredPromise!: DeferredPromise<T>;
   private readonly promise: Promise<T>;
 
@@ -13,13 +17,20 @@ export class CompletablePromise<T = any> {
     });
   }
 
+  private makeDeferredOperation(newState: State, deferredOperation: DeferredOperation<T>) {
+    if (this.state === State.Pending) {
+      deferredOperation(this.deferredPromise);
+      this.state = newState;
+    }
+  }
+
   /**
    * Resolves the promise with a value or the result of another promise.
    * 
    * @param value The value or the result of another promise.
    */
   resolve(value: T | PromiseLike<T>): void {
-    this.deferredPromise.resolve(value);
+    this.makeDeferredOperation(State.Fulfilled, deferredPromise => deferredPromise.resolve(value));
   }
 
   /**
@@ -42,7 +53,7 @@ export class CompletablePromise<T = any> {
    * @param reason The reason or error.
    */
   reject(reason: any): void {
-    this.deferredPromise.reject(reason);
+    this.makeDeferredOperation(State.Rejected, deferredPromise => deferredPromise.reject(reason));
   }
 
   /**
