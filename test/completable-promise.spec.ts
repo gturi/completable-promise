@@ -39,6 +39,21 @@ describe('CompletablePromise', () => {
       array.push('baz');
       expect(array).to.eql(['foo', 'bar', 'baz']);
     });
+
+    it('should ignore future #resolve and #reject calls', done => {
+      const number = 5;
+      const promise = new CompletablePromise();
+
+      promise.resolve(number);
+      promise.resolve(10);
+      promise.reject('something went wrong');
+
+      promise.then(value => {
+        expect(value).to.equal(number);
+      }).catch(/* istanbul ignore next */() => {
+        throwUnreachableCodeException();
+      }).finally(done);
+    });
   });
 
   describe('#tryResolve', () => {
@@ -47,9 +62,9 @@ describe('CompletablePromise', () => {
       const promise = new CompletablePromise();
 
       promise.then(value => {
-        expect(value).to.eql({'foo': 'bar'});
+        expect(value).to.eql({ 'foo': 'bar' });
         done();
-      }).catch(/* istanbul ignore next */ () => {
+      }).catch(/* istanbul ignore next */() => {
         throwUnreachableCodeException();
       });
 
@@ -60,7 +75,7 @@ describe('CompletablePromise', () => {
       const brokenJsonString = '{"foo":"bar"';
       const promise = new CompletablePromise();
 
-      promise.then(/* istanbul ignore next */ () => {
+      promise.then(/* istanbul ignore next */() => {
         throwUnreachableCodeException();
       }).catch(reason => {
         expect(reason.name).to.equal('SyntaxError');
@@ -89,7 +104,7 @@ describe('CompletablePromise', () => {
       const errorMessage = 'something went wrong';
       const promise = new CompletablePromise();
 
-      promise.then(/* istanbul ignore next */ () => {
+      promise.then(/* istanbul ignore next */() => {
         throwUnreachableCodeException();
       }).catch(reason => {
         expect(reason).to.equal(errorMessage);
@@ -97,6 +112,21 @@ describe('CompletablePromise', () => {
       });
 
       promise.reject(errorMessage);
+    });
+
+    it('should ignore future #resolve and #reject calls', done => {
+      const errorMessage = 'something went wrong';
+      const promise = new CompletablePromise();
+
+      promise.reject('something went wrong');
+      promise.resolve(errorMessage);
+      promise.reject('another error');
+
+      promise.then(/* istanbul ignore next */() => {
+        throwUnreachableCodeException();
+      }).catch(reason => {
+        expect(reason).to.equal(errorMessage);
+      }).finally(done);
     });
   });
 
@@ -110,12 +140,12 @@ describe('CompletablePromise', () => {
         return new Promise((resolve, reject) => {
           resolve('bar');
         });
-      },/* istanbul ignore next */ () => {
+      },/* istanbul ignore next */() => {
         throwUnreachableCodeException('in first onrejected');
       }).then(value => {
         expect(value).to.equal('bar');
         done();
-      },/* istanbul ignore next */ () => {
+      },/* istanbul ignore next */() => {
         throwUnreachableCodeException('in second onrejected');
       });
 
@@ -125,14 +155,14 @@ describe('CompletablePromise', () => {
     it('should ignore onfulfilled callback when using #reject', done => {
       const promise = new CompletablePromise();
 
-      promise.then(/* istanbul ignore next */ () => {
+      promise.then(/* istanbul ignore next */() => {
         throwUnreachableCodeException('in first onfulfilled');
       }, reason => {
         expect(reason).to.equal(errorMessage);
         done();
-      }).then(/* istanbul ignore next */ () => {
+      }).then(/* istanbul ignore next */() => {
         throwUnreachableCodeException('in second onfulfilled');
-      },/* istanbul ignore next */ () => {
+      },/* istanbul ignore next */() => {
         throwUnreachableCodeException('in second onrejected');
       });
 
