@@ -116,36 +116,38 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Returns true if the promise state it is State.Pending.
+   * Returns true if the promise state it is {@link State.Pending}.
    * 
-   * @returns whether the promise state it is State.Pending.
+   * @returns whether the promise state it is {@link State.Pending}.
    */
   isPending(): boolean {
     return this.state === State.Pending;
   }
 
   /**
-   * Returns true if the promise state it is State.Fulfilled.
+   * Returns true if the promise state it is {@link State.Fulfilled}.
    * 
-   * @returns whether the promise state it is State.Fulfilled.
+   * @returns whether the promise state it is {@link State.Fulfilled}.
    */
   isFulfilled(): boolean {
     return this.state === State.Fulfilled;
   }
 
   /**
-   * Returns true if the promise state it is State.Rejected.
+   * Returns true if the promise state it is {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is State.Rejected.
+   * @returns whether the promise state it is {@link State.Rejected}.
    */
   isRejected(): boolean {
     return this.state === State.Rejected;
   }
 
   /**
-   * Returns true if the promise state it is either State.Fulfilled or State.Rejected.
+   * Returns true if the promise state it is either {@link State.Fulfilled}
+   * or {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is either State.Fulfilled or State.Rejected.
+   * @returns whether the promise state it is either {@link State.Fulfilled}
+   *          or {@link State.Rejected}.
    */
   isSettled(): boolean {
     return !this.isPending();
