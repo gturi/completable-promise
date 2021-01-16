@@ -34,6 +34,15 @@ export class CompletablePromise<T = any> {
   }
 
   /**
+   * Rejects the promise with a provided reason or error.
+   * 
+   * @param reason The reason or error.
+   */
+  reject(reason: any): void {
+    this.makeDeferredOperation(State.Rejected, deferredPromise => deferredPromise.reject(reason));
+  }
+
+  /**
    * Attempts to {@link resolve} the promise with a value or the result of another promise.
    * If retrieving {@param getValue} result fails, {@link reject} function will be called instead.
    * 
@@ -45,15 +54,6 @@ export class CompletablePromise<T = any> {
     } catch (error) {
       this.deferredPromise.reject(error);
     }
-  }
-
-  /**
-   * Rejects the promise with a provided reason or error.
-   * 
-   * @param reason The reason or error.
-   */
-  reject(reason: any): void {
-    this.makeDeferredOperation(State.Rejected, deferredPromise => deferredPromise.reject(reason));
   }
 
   /**
