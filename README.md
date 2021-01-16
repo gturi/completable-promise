@@ -25,3 +25,10 @@ Using yarn:
 ```
 $ yarn add completable-promise
 ```
+
+## Examples
+
+TODO
+
+# License
+[MIT](LICENSE)
