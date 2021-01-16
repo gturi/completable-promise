@@ -18,7 +18,7 @@ export class CompletablePromise<T = any> {
   }
 
   private makeDeferredOperation(newState: State, deferredOperation: DeferredOperation<T>) {
-    if (this.state === State.Pending) {
+    if (this.isPending()) {
       deferredOperation(this.deferredPromise);
       this.state = newState;
     }
@@ -116,11 +116,38 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Returns true if the promise state it is either fulfilled or rejected.
+   * Returns true if the promise state it is State.Pending.
    * 
-   * @returns whether the promise state it is either fulfilled or rejected.
+   * @returns whether the promise state it is State.Pending.
+   */
+  isPending(): boolean {
+    return this.state === State.Pending;
+  }
+
+  /**
+   * Returns true if the promise state it is State.Fulfilled.
+   * 
+   * @returns whether the promise state it is State.Fulfilled.
+   */
+  isFulfilled(): boolean {
+    return this.state === State.Fulfilled;
+  }
+
+  /**
+   * Returns true if the promise state it is State.Rejected.
+   * 
+   * @returns whether the promise state it is State.Rejected.
+   */
+  isRejected(): boolean {
+    return this.state === State.Rejected;
+  }
+
+  /**
+   * Returns true if the promise state it is either State.Fulfilled or State.Rejected.
+   * 
+   * @returns whether the promise state it is either State.Fulfilled or State.Rejected.
    */
   isSettled(): boolean {
-    return this.state !== State.Pending;
+    return !this.isPending();
   }
 }
