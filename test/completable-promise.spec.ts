@@ -1,6 +1,7 @@
 import 'mocha';
 import { expect } from 'chai';
 import { CompletablePromise } from '../src/index';
+import { State } from '../src/index';
 
 describe('CompletablePromise', () => {
 
@@ -9,6 +10,22 @@ describe('CompletablePromise', () => {
   const throwUnreachableCodeException = (/* istanbul ignore next */ value = '') => {
     throw new Error(`code should not be reached ${value}`);
   }
+
+  const expectTrue = (result: boolean) => expect(result).to.equal(true);
+
+  const expectFalse = (result: boolean) => expect(result).to.equal(false);
+
+  describe('#constructor', () => {
+    it('should should correctly initialize the proimise state', () => {
+      const promise = new CompletablePromise();
+
+      expect(promise.getState()).to.equal(State.Pending);
+      expectTrue(promise.isPending());
+      expectFalse(promise.isFulfilled());
+      expectFalse(promise.isRejected());
+      expectFalse(promise.isSettled());
+    });
+  });
 
   describe('#resolve', () => {
     it('should return the value to `then` handler', done => {
