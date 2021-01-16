@@ -37,7 +37,10 @@ describe('CompletablePromise', () => {
         done();
       });
 
+      expectTrue(promise.isPending());
       promise.resolve(number);
+      expectTrue(promise.isFulfilled());
+      expectTrue(promise.isSettled());
     });
 
     it('should respect asynchronous behaviour', done => {
@@ -49,7 +52,10 @@ describe('CompletablePromise', () => {
         done();
       });
 
+      expectTrue(promise.isPending());
       promise.resolve(array);
+      expectTrue(promise.isFulfilled());
+      expectTrue(promise.isSettled());
 
       array.push('bar');
       expect(array).to.eql(['foo', 'bar']);
@@ -61,9 +67,14 @@ describe('CompletablePromise', () => {
       const number = 5;
       const promise = new CompletablePromise();
 
+      expectTrue(promise.isPending());
       promise.resolve(number);
       promise.resolve(10);
       promise.reject('something went wrong');
+
+      expectTrue(promise.isFulfilled());
+      expectFalse(promise.isRejected());
+      expectTrue(promise.isSettled());
 
       promise.then(value => {
         expect(value).to.equal(number);
@@ -83,7 +94,10 @@ describe('CompletablePromise', () => {
         done();
       });
 
+      expectTrue(promise.isPending());
       promise.reject(errorMessage);
+      expectTrue(promise.isRejected());
+      expectTrue(promise.isSettled());
     });
 
     it('should return the value to `catch` handler of the chained promise', done => {
@@ -97,16 +111,24 @@ describe('CompletablePromise', () => {
         done();
       });
 
+      expectTrue(promise.isPending());
       promise.reject(errorMessage);
+      expectTrue(promise.isRejected());
+      expectTrue(promise.isSettled());
     });
 
     it('should ignore future #resolve and #reject calls', done => {
       const errorMessage = 'something went wrong';
       const promise = new CompletablePromise();
 
+      expectTrue(promise.isPending());
       promise.reject('something went wrong');
       promise.resolve(errorMessage);
       promise.reject('another error');
+
+      expectTrue(promise.isRejected());
+      expectFalse(promise.isFulfilled());
+      expectTrue(promise.isSettled());
 
       promise.then(/* istanbul ignore next */() => {
         throwUnreachableCodeException();
@@ -128,7 +150,10 @@ describe('CompletablePromise', () => {
         throwUnreachableCodeException();
       });
 
+      expectTrue(promise.isPending());
       promise.tryResolve(() => JSON.parse(jsonString));
+      expectTrue(promise.isFulfilled());
+      expectTrue(promise.isSettled());
     });
 
     it('should return the failure reason to `catch` handler when getValue fails', done => {
@@ -143,7 +168,10 @@ describe('CompletablePromise', () => {
         done();
       });
 
+      expectTrue(promise.isPending());
       promise.tryResolve(() => JSON.parse(brokenJsonString));
+      expectTrue(promise.isRejected());
+      expectTrue(promise.isSettled());
     });
   });
 
