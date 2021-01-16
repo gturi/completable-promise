@@ -54,9 +54,9 @@ export class CompletablePromise<T = any> {
    */
   tryResolve(getValue: () => T | PromiseLike<T>): void {
     try {
-      this.deferredPromise.resolve(getValue());
+      this.resolve(getValue());
     } catch (error) {
-      this.deferredPromise.reject(error);
+      this.reject(error);
     }
   }
 
