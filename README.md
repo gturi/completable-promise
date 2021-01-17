@@ -28,7 +28,7 @@ $ yarn add completable-promise
 
 ## Usage
 
-A CompletablePromise can be initialized as follows:
+A `CompletablePromise` can be initialized as follows:
 
 ```js
 import { CompletablePromise } from "completable-promise";
@@ -72,9 +72,9 @@ completablePromise.reject('error'); // ignored
 
 ### CompletablePromise states
 
-CompletablePromise states are reflect the Promise states (more info can be found [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#description)).
+`CompletablePromise` states reflect the `Promise` states (more info can be found [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#description)).
 
-Upon initialization, a CompletablePromise will be in `pending` state. 
+Upon initialization, a `CompletablePromise` will be in `pending` state. 
 
 ```js
 const completablePromise = new CompletablePromise();
@@ -84,7 +84,7 @@ console.log(completablePromise.isPending());   // true
 console.log(completablePromise.isSettled());   // false
 ```
 
-Upon calling `resolve`, the state will irreversibely change to `fulfilled`:
+Upon calling `resolve`, the state will irreversibly change to `fulfilled`:
 
 ```js
 completablePromise.resolve('foo');
@@ -102,7 +102,7 @@ console.log(completablePromise.isFulfilled()); // true
 console.log(completablePromise.isRejected());  // false
 ```
 
-Upon calling `reject`, the state will irreversibely change to `rejected`:
+Upon calling `reject`, the state will irreversibly change to `rejected`:
 
 ```js
 completablePromise.reject('error');
@@ -122,7 +122,7 @@ console.log(completablePromise.isRejected());  // true
 
 ### CompletablePromise antipattern
 
-A problem that can happen when using CompletablePromise is incurring in the following antipattern:
+When using a `CompletablePromise`, the following antipattern (where errors should be explicitly handled within a `try...catch`) can arise:
 
 ```js
 const completablePromise = new CompletablePromise();
@@ -134,6 +134,7 @@ completablePromise.then(value => {
 });
 
 const brokenJsonString = '{"foo":"bar"';
+// try...catch antipattern
 try {
     completablePromise.resolve(JSON.parse(brokenJsonString));
 } catch (exception) {
@@ -141,9 +142,7 @@ try {
 }
 ```
 
-Errors should be explicitly handled within a try catch!
-
-Such thing does not happen with the classic Promise approach:
+Such thing does not happen with the classic `Promise` approach:
 
 ```js
 const brokenJsonString = '{"foo":"bar"';
@@ -158,7 +157,7 @@ promise.then(value => {
 });
 ```
 
-A solution to this problem is using CompletablePromise `tryResolve`:
+A solution to this problem is using `tryResolve` method:
 
 ```js
 const completablePromise = new CompletablePromise();
@@ -180,7 +179,7 @@ completablePromise.tryResolve(() => {
 
 A possible use case of this library is to promisify a function that is based on the callback approach, avoiding the callback hell/pyramid of doom problem.
 
-The following example shows how to prompt multiple times the user for some input. Even if the CompletablePromise approach is a bit more elaborated, its result is surely clearer thanks to the chaining of the promises.
+The following example shows how to prompt multiple times the user for some input. Even if the `CompletablePromise` approach is a bit more elaborated, its result is surely clearer thanks to the chaining of the promises.
 
 Common setup:
 ```js
