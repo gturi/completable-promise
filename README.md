@@ -96,7 +96,7 @@ console.log(completablePromise.isSettled());   // true
 console.log(completablePromise.isFulfilled()); // true
 console.log(completablePromise.isRejected());  // false
 
-completablePromise.reject('error'); // ignored
+completablePromise.reject('error');
 
 console.log(completablePromise.isFulfilled()); // true
 console.log(completablePromise.isRejected());  // false
@@ -114,10 +114,66 @@ console.log(completablePromise.isSettled());   // true
 console.log(completablePromise.isFulfilled()); // false
 console.log(completablePromise.isRejected());  // true
 
-completablePromise.resolve('foo'); // ignored
+completablePromise.resolve('foo');
 
 console.log(completablePromise.isFulfilled()); // false
 console.log(completablePromise.isRejected());  // true
+```
+
+### CompletablePromise antipattern
+
+A problem that can happen when using CompletablePromise is incurring in the following antipattern:
+
+```js
+const completablePromise = new CompletablePromise();
+
+completablePromise.then(value => {
+    console.log(value);    // never printed out
+}).catch(reason => { 
+    console.error(reason); // never printed out
+});
+
+const brokenJsonString = '{"foo":"bar"';
+try {
+    completablePromise.resolve(JSON.parse(brokenJsonString));
+} catch (exception) {
+    // fallback
+}
+```
+
+Errors should be explicitly handled within a try catch!
+
+Such thing does not happen with the classic Promise approach:
+
+```js
+const brokenJsonString = '{"foo":"bar"';
+const promise = new Promise((resolve, reject) => {
+    resolve(JSON.parse(brokenJsonString));
+});
+
+promise.then(value => {
+    console.log(value);    // never printed out
+}).catch(reason => { 
+    console.error(reason); // prints the failure reason
+});
+```
+
+A solution to this problem is using CompletablePromise `tryResolve`:
+
+```js
+const completablePromise = new CompletablePromise();
+
+completablePromise.then(value => {
+    console.log(value);    // never printed out
+}).catch(reason => { 
+    console.error(reason); // prints the failure reason
+});
+
+const brokenJsonString = '{"foo":"bar"';
+completablePromise.tryResolve(() => {
+    // put here all the code that might fail and should be eventually handled in the catch handler
+    return JSON.parse(brokenJsonString);
+});
 ```
 
 ## Example
