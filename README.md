@@ -26,9 +26,164 @@ Using yarn:
 $ yarn add completable-promise
 ```
 
-## Examples
+## Usage
 
-TODO
+A CompletablePromise can be initialized as follows:
 
-# License
+```js
+import { CompletablePromise } from "completable-promise";
+
+const completablePromise = new CompletablePromise();
+
+completablePromise.then(value => {
+    console.log(value);
+}).catch(reason => { 
+    console.error(reason);
+});
+```
+
+This kind of promise will remain in `pending` state until one among `resolve` or `reject` methods is explicitly called:
+
+- `resolve` will trigger the `then` transition
+    ```js
+    completablePromise.resolve('foo');
+    ```
+
+- `reject` will trigger the `catch` transition
+    ```js
+    completablePromise.reject('error');
+    ```
+
+After the first `resolve` or `reject` call, future ones will be ignored:
+
+```js
+const completablePromise = new CompletablePromise();
+
+completablePromise.then(value => {
+    console.log(value);    // foo
+}).catch(reason => { 
+    console.error(reason); // never printed out
+});
+
+completablePromise.resolve('foo');  // success
+completablePromise.resolve('bar');  // ignored
+completablePromise.reject('error'); // ignored
+```
+
+### CompletablePromise states
+
+CompletablePromise states are reflect the Promise states (more info can be found [here](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#description)).
+
+Upon initialization, a CompletablePromise will be in `pending` state. 
+
+```js
+const completablePromise = new CompletablePromise();
+
+console.log(completablePromise.getState());    // pending
+console.log(completablePromise.isPending());   // true
+console.log(completablePromise.isSettled());   // false
+```
+
+Upon calling `resolve`, the state will irreversibely change to `fulfilled`:
+
+```js
+completablePromise.resolve('foo');
+
+console.log(completablePromise.getState());    // fulfilled
+console.log(completablePromise.isPending());   // false
+console.log(completablePromise.isSettled());   // true
+
+console.log(completablePromise.isFulfilled()); // true
+console.log(completablePromise.isRejected());  // false
+
+completablePromise.reject('error'); // ignored
+
+console.log(completablePromise.isFulfilled()); // true
+console.log(completablePromise.isRejected());  // false
+```
+
+Upon calling `reject`, the state will irreversibely change to `rejected`:
+
+```js
+completablePromise.reject('error');
+
+console.log(completablePromise.getState());    // rejected
+console.log(completablePromise.isPending());   // false
+console.log(completablePromise.isSettled());   // true
+
+console.log(completablePromise.isFulfilled()); // false
+console.log(completablePromise.isRejected());  // true
+
+completablePromise.resolve('foo'); // ignored
+
+console.log(completablePromise.isFulfilled()); // false
+console.log(completablePromise.isRejected());  // true
+```
+
+## Example
+
+A possible use case of this library is to promisify a function that is based on the callback approach, avoiding the callback hell/pyramid of doom problem.
+
+The following example shows how to prompt multiple times the user for some input. Even if the CompletablePromise approach is a bit more elaborated, its result is surely clearer thanks to the chaining of the promises.
+
+Common setup:
+```js
+import { createInterface } from "readline";
+
+const readLine = createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+```
+
+Callback approach:
+```js
+readLine.question('Step 1) Insert a value: ', value => {
+    console.log(value);
+    // perform other operations with the first input 
+    readLine.question('Step 2) Insert another value: ', value => {
+        console.log(value);
+        // perform other operations with the second input
+        readLine.question('Step 3) Insert once again a value: ', value => {
+            readLine.close();
+            console.log(value);
+            // perform other operations with the third input
+        });
+    });
+});
+```
+
+CompletablePromise approach:
+```js
+import { CompletablePromise } from "completable-promise";
+
+function readUserInput(query) {
+    const completablePromise = new CompletablePromise();
+    readLine.question(query, value => {
+        completablePromise.resolve(value);
+    });
+    return completablePromise;
+}
+
+readUserInput('Step 1) Insert a value: ').then(value => {
+    console.log(value);
+    // perform other operations with the first input 
+    return readUserInput('Step 2) Insert another value: ');
+}).then(value => {
+    console.log(value);
+    // perform other operations with the second input
+    return readUserInput('Step 3) Insert once again a value: ');
+}).then(value => {
+    readLine.close();
+    console.log(value);
+    // perform other operations with the third input
+}).catch(reason => console.error(reason));
+```
+
+## Contributing
+
+Contributions, issues and feature requests are welcome!
+
+## License
+
 [MIT](LICENSE)
