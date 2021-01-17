@@ -90,6 +90,7 @@
 					<li><a href="#Usage">Usage</a><ul>
 							<li><a href="#CompletablePromise-states">CompletablePromise states</a></li>
 							<li><a href="#CompletablePromise-antipattern-solution">CompletablePromise antipattern solution</a></li>
+							<li><a href="#Mixing-CompletablePromise-and-Promise">Mixing CompletablePromise and Promise</a></li>
 						</ul>
 					</li>
 					<li><a href="#Example">Example</a></li>
@@ -108,6 +109,7 @@
 				<p>Using yarn:</p>
 				<pre><code><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">yarn</span><span style="color: #000000"> </span><span style="color: #001080">add</span><span style="color: #000000"> </span><span style="color: #001080">completable</span><span style="color: #000000">-</span><span style="color: #001080">promise</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
 					<h2>Usage</h2>
 				</a>
@@ -146,6 +148,7 @@
 <span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;bar&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// ignored</span>
 <span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">reject</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// ignored</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#completablepromise-states" id="completablepromise-states" style="color: inherit; text-decoration: none;">
 					<h3>CompletablePromise states</h3>
 				</a>
@@ -187,6 +190,7 @@
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isFulfilled</span><span style="color: #000000">()); </span><span style="color: #008000">// false</span>
 <span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isRejected</span><span style="color: #000000">());  </span><span style="color: #008000">// true</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#completablepromise-antipattern-solution" id="completablepromise-antipattern-solution" style="color: inherit; text-decoration: none;">
 					<h3>CompletablePromise antipattern solution</h3>
 				</a>
@@ -234,6 +238,25 @@
 <span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">brokenJsonString</span><span style="color: #000000">);</span>
 <span style="color: #000000">});</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
+				<a href="#mixing-completablepromise-and-promise" id="mixing-completablepromise-and-promise" style="color: inherit; text-decoration: none;">
+					<h3>Mixing CompletablePromise and Promise</h3>
+				</a>
+				<p>Sometimes there are situations where the results of more promises need to be aggregated with <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all">Promise.all</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled">Promise.allSettled</a>, <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any">Promise.any</a> and <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race">Promise.race</a> constructs.</p>
+				<p>For this purpose, the <code>get</code> method allows to retrieve the inner <code>Promise</code> instance of a <code>CompletablePromise</code>:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">promise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">((</span><span style="color: #001080">resolve</span><span style="color: #000000">, </span><span style="color: #001080">reject</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;bar&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #267F99">Promise</span><span style="color: #000000">.</span><span style="color: #795E26">all</span><span style="color: #000000">([</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(), </span><span style="color: #001080">promise</span><span style="color: #000000">]).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">values</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">values</span><span style="color: #000000">) </span><span style="color: #008000">// [&#039;foo&#039;, &#039;bar&#039;]</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
 					<h2>Example</h2>
 				</a>
@@ -287,14 +310,17 @@
 <span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the third input</span>
 <span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">));</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h2>Contributing</h2>
 				</a>
 				<p>Contributions, issues and feature requests are welcome!</p>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
 					<h2>License</h2>
 				</a>
-				<p><a href="LICENSE">MIT</a></p>
+				<p>This library is distributed under the <a href="LICENSE">MIT license</a>.</p>
+				<p><a href="#CompletablePromise">Back to top</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
