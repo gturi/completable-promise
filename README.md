@@ -15,6 +15,7 @@ CompletablePromise allows to create a Promise instance that does not start its r
 - [Usage](#Usage)
     - [CompletablePromise states](#CompletablePromise-states)
     - [CompletablePromise antipattern solution](#CompletablePromise-antipattern-solution)
+    - [Mixing CompletablePromise and Promise](#Mixing-CompletablePromise-and-Promise)
 - [Example](#Example)
 - [Contributing](#Contributing)
 - [License](#License)
@@ -189,6 +190,28 @@ completablePromise.tryResolve(() => {
     // put here all the code that might fail and should be eventually handled in the catch handler
     return JSON.parse(brokenJsonString);
 });
+```
+
+[Back to top](#CompletablePromise)
+
+### Mixing CompletablePromise and Promise
+
+Sometimes there are situations where the results of more promises need to be aggregated with [Promise.all](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/all), [Promise.allSettled](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled), [Promise.any](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/any) and [Promise.race](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/race) constructs.
+
+For this purpose, the `get` method allows to retrieve the inner `Promise` instance of a `CompletablePromise`:
+
+```js
+const completablePromise = new CompletablePromise();
+
+const promise = new Promise((resolve, reject) => {
+    resolve('bar');
+});
+
+Promise.all([completablePromise.get(), promise]).then(values => {
+    console.log(values) // ['foo', 'bar']
+});
+
+completablePromise.resolve('foo');
 ```
 
 [Back to top](#CompletablePromise)
