@@ -9,6 +9,16 @@
 
 CompletablePromise allows to create a Promise instance that does not start its resolution upon its declaration.
 
+## Table of Contents
+
+- [Installing](#Installing)
+- [Usage](#Usage)
+    - [CompletablePromise states](#CompletablePromise-states)
+    - [CompletablePromise antipattern solution](#CompletablePromise-antipattern-solution)
+- [Example](#Example)
+- [Contributing](#Contributing)
+- [License](#License)
+
 ## Installing
 
 Using npm:
@@ -120,7 +130,7 @@ console.log(completablePromise.isFulfilled()); // false
 console.log(completablePromise.isRejected());  // true
 ```
 
-### CompletablePromise antipattern
+### CompletablePromise antipattern solution
 
 When using a `CompletablePromise`, the following antipattern (where errors should be explicitly handled within a `try...catch`) can arise:
 
