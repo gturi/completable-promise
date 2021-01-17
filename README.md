@@ -36,6 +36,8 @@ Using yarn:
 $ yarn add completable-promise
 ```
 
+[Back to top](#CompletablePromise)
+
 ## Usage
 
 A `CompletablePromise` can be initialized as follows:
@@ -79,6 +81,8 @@ completablePromise.resolve('foo');  // success
 completablePromise.resolve('bar');  // ignored
 completablePromise.reject('error'); // ignored
 ```
+
+[Back to top](#CompletablePromise)
 
 ### CompletablePromise states
 
@@ -129,6 +133,8 @@ completablePromise.resolve('foo');
 console.log(completablePromise.isFulfilled()); // false
 console.log(completablePromise.isRejected());  // true
 ```
+
+[Back to top](#CompletablePromise)
 
 ### CompletablePromise antipattern solution
 
@@ -184,6 +190,8 @@ completablePromise.tryResolve(() => {
     return JSON.parse(brokenJsonString);
 });
 ```
+
+[Back to top](#CompletablePromise)
 
 ## Example
 
@@ -245,10 +253,16 @@ readUserInput('Step 1) Insert a value: ').then(value => {
 }).catch(reason => console.error(reason));
 ```
 
+[Back to top](#CompletablePromise)
+
 ## Contributing
 
 Contributions, issues and feature requests are welcome!
 
+[Back to top](#CompletablePromise)
+
 ## License
 
-[MIT](LICENSE)
+This library is distributed under the [MIT license](LICENSE).
+
+[Back to top](#CompletablePromise)
