@@ -94,6 +94,193 @@
 				<p>Using yarn:</p>
 				<pre><code><span style="color: #001080">$</span><span style="color: #000000"> </span><span style="color: #001080">yarn</span><span style="color: #000000"> </span><span style="color: #001080">add</span><span style="color: #000000"> </span><span style="color: #001080">completable</span><span style="color: #000000">-</span><span style="color: #001080">promise</span>
 </code></pre>
+				<a href="#usage" id="usage" style="color: inherit; text-decoration: none;">
+					<h2>Usage</h2>
+				</a>
+				<p>A <code>CompletablePromise</code> can be initialized as follows:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CompletablePromise</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;completable-promise&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>This kind of promise will remain in <code>pending</code> state until one among <code>resolve</code> or <code>reject</code> methods is explicitly called:</p>
+				<ul>
+					<li><p><code>resolve</code> will trigger the <code>then</code> transition</p>
+						<pre><code class="language-js"><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+					</li>
+					<li><p><code>reject</code> will trigger the <code>catch</code> transition</p>
+						<pre><code class="language-js"><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">reject</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">);</span>
+</code></pre>
+					</li>
+				</ul>
+				<p>After the first <code>resolve</code> or <code>reject</code> call, future ones will be ignored:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);    </span><span style="color: #008000">// foo</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">); </span><span style="color: #008000">// never printed out</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// success</span>
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;bar&#039;</span><span style="color: #000000">);  </span><span style="color: #008000">// ignored</span>
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">reject</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">); </span><span style="color: #008000">// ignored</span>
+</code></pre>
+				<a href="#completablepromise-states" id="completablepromise-states" style="color: inherit; text-decoration: none;">
+					<h3>CompletablePromise states</h3>
+				</a>
+				<p><code>CompletablePromise</code> states reflect the <code>Promise</code> states (more info can be found <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise#description">here</a>).</p>
+				<p>Upon initialization, a <code>CompletablePromise</code> will be in <code>pending</code> state. </p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">getState</span><span style="color: #000000">());    </span><span style="color: #008000">// pending</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isPending</span><span style="color: #000000">());   </span><span style="color: #008000">// true</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isSettled</span><span style="color: #000000">());   </span><span style="color: #008000">// false</span>
+</code></pre>
+				<p>Upon calling <code>resolve</code>, the state will irreversibly change to <code>fulfilled</code>:</p>
+				<pre><code class="language-js"><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">getState</span><span style="color: #000000">());    </span><span style="color: #008000">// fulfilled</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isPending</span><span style="color: #000000">());   </span><span style="color: #008000">// false</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isSettled</span><span style="color: #000000">());   </span><span style="color: #008000">// true</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isFulfilled</span><span style="color: #000000">()); </span><span style="color: #008000">// true</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isRejected</span><span style="color: #000000">());  </span><span style="color: #008000">// false</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">reject</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isFulfilled</span><span style="color: #000000">()); </span><span style="color: #008000">// true</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isRejected</span><span style="color: #000000">());  </span><span style="color: #008000">// false</span>
+</code></pre>
+				<p>Upon calling <code>reject</code>, the state will irreversibly change to <code>rejected</code>:</p>
+				<pre><code class="language-js"><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">reject</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;error&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">getState</span><span style="color: #000000">());    </span><span style="color: #008000">// rejected</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isPending</span><span style="color: #000000">());   </span><span style="color: #008000">// false</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isSettled</span><span style="color: #000000">());   </span><span style="color: #008000">// true</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isFulfilled</span><span style="color: #000000">()); </span><span style="color: #008000">// false</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isRejected</span><span style="color: #000000">());  </span><span style="color: #008000">// true</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);</span>
+
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isFulfilled</span><span style="color: #000000">()); </span><span style="color: #008000">// false</span>
+<span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">isRejected</span><span style="color: #000000">());  </span><span style="color: #008000">// true</span>
+</code></pre>
+				<a href="#completablepromise-antipattern" id="completablepromise-antipattern" style="color: inherit; text-decoration: none;">
+					<h3>CompletablePromise antipattern</h3>
+				</a>
+				<p>When using a <code>CompletablePromise</code>, the following antipattern (where errors should be explicitly handled within a <code>try...catch</code>) can arise:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);    </span><span style="color: #008000">// never printed out</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">); </span><span style="color: #008000">// never printed out</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">brokenJsonString</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;{&quot;foo&quot;:&quot;bar&quot;&#039;</span><span style="color: #000000">;</span>
+<span style="color: #008000">// try...catch antipattern</span>
+<span style="color: #AF00DB">try</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">brokenJsonString</span><span style="color: #000000">));</span>
+<span style="color: #000000">} </span><span style="color: #AF00DB">catch</span><span style="color: #000000"> (</span><span style="color: #001080">exception</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// fallback</span>
+<span style="color: #000000">}</span>
+</code></pre>
+				<p>Such thing does not happen with the classic <code>Promise</code> approach:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">brokenJsonString</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;{&quot;foo&quot;:&quot;bar&quot;&#039;</span><span style="color: #000000">;</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">promise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">Promise</span><span style="color: #000000">((</span><span style="color: #001080">resolve</span><span style="color: #000000">, </span><span style="color: #001080">reject</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">brokenJsonString</span><span style="color: #000000">));</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #001080">promise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);    </span><span style="color: #008000">// never printed out</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">); </span><span style="color: #008000">// prints the failure reason</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>A solution to this problem is using <code>tryResolve</code> method:</p>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);    </span><span style="color: #008000">// never printed out</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">); </span><span style="color: #008000">// prints the failure reason</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">brokenJsonString</span><span style="color: #000000"> = </span><span style="color: #A31515">&#039;{&quot;foo&quot;:&quot;bar&quot;&#039;</span><span style="color: #000000">;</span>
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">tryResolve</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// put here all the code that might fail and should be eventually handled in the catch handler</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #267F99">JSON</span><span style="color: #000000">.</span><span style="color: #795E26">parse</span><span style="color: #000000">(</span><span style="color: #001080">brokenJsonString</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
+					<h2>Example</h2>
+				</a>
+				<p>A possible use case of this library is to promisify a function that is based on the callback approach, avoiding the callback hell/pyramid of doom problem.</p>
+				<p>The following example shows how to prompt multiple times the user for some input. Even if the <code>CompletablePromise</code> approach is a bit more elaborated, its result is surely clearer thanks to the chaining of the promises.</p>
+				<p>Common setup:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">createInterface</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;readline&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">readLine</span><span style="color: #000000"> = </span><span style="color: #795E26">createInterface</span><span style="color: #000000">({</span>
+<span style="color: #000000">    </span><span style="color: #001080">input:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">stdin</span><span style="color: #000000">,</span>
+<span style="color: #000000">    </span><span style="color: #001080">output:</span><span style="color: #000000"> </span><span style="color: #001080">process</span><span style="color: #000000">.</span><span style="color: #001080">stdout</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>Callback approach:</p>
+				<pre><code class="language-js"><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">question</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 1) Insert a value: &#039;</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the first input </span>
+<span style="color: #000000">    </span><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">question</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 2) Insert another value: &#039;</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">        </span><span style="color: #008000">// perform other operations with the second input</span>
+<span style="color: #000000">        </span><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">question</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 3) Insert once again a value: &#039;</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">            </span><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">close</span><span style="color: #000000">();</span>
+<span style="color: #000000">            </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">            </span><span style="color: #008000">// perform other operations with the third input</span>
+<span style="color: #000000">        });</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>CompletablePromise approach:</p>
+				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CompletablePromise</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;completable-promise&quot;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">function</span><span style="color: #000000"> </span><span style="color: #795E26">readUserInput</span><span style="color: #000000">(</span><span style="color: #001080">query</span><span style="color: #000000">) {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #267F99">CompletablePromise</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">question</span><span style="color: #000000">(</span><span style="color: #001080">query</span><span style="color: #000000">, </span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #001080">completablePromise</span><span style="color: #000000">;</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #795E26">readUserInput</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 1) Insert a value: &#039;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the first input </span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">readUserInput</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 2) Insert another value: &#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the second input</span>
+<span style="color: #000000">    </span><span style="color: #AF00DB">return</span><span style="color: #000000"> </span><span style="color: #795E26">readUserInput</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;Step 3) Insert once again a value: &#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">readLine</span><span style="color: #000000">.</span><span style="color: #795E26">close</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the third input</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">));</span>
+</code></pre>
+				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
+					<h2>Contributing</h2>
+				</a>
+				<p>Contributions, issues and feature requests are welcome!</p>
+				<a href="#license" id="license" style="color: inherit; text-decoration: none;">
+					<h2>License</h2>
+				</a>
+				<p><a href="LICENSE">MIT</a></p>
 			</div>
 		</div>
 		<div class="col-4 col-menu menu-sticky-wrap menu-highlight">
