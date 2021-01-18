@@ -6,9 +6,9 @@ import { State } from "./state";
 type DeferredOperation<T> = (deferredPromise: DeferredPromise<T>) => void;
 
 /**
- * A {@link Promise} that can be explicitly resolved or rejected.
+ * A Promise that can be explicitly resolved or rejected.
  * 
- * @type T the type of the {@link CompletablePromise}.
+ * @type T The type of the {@link CompletablePromise}.
  */
 export class CompletablePromise<T = any> {
 
@@ -27,8 +27,8 @@ export class CompletablePromise<T = any> {
    * {@link State.Pending}. Then sets the {@link CompletablePromise} state to the
    * specified one.
    * 
-   * @param newState the new state assigned to the {@link CompletablePromise}.
-   * @param deferredOperation the method of the {@link DeferredPromise} that should be called.
+   * @param newState The new state assigned to the {@link CompletablePromise}.
+   * @param deferredOperation The method of the {@link DeferredPromise} that should be called.
    */
   private makeDeferredOperation(newState: State, deferredOperation: DeferredOperation<T>) {
     if (this.isPending()) {
@@ -38,20 +38,20 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Resolves the promise with a value or the result of another promise.
-   * This method call will succeed only if the promise was in Pending state,
-   * and it will irreversibly change the promise state to Fulfilled.
+   * Resolves the Promise with a value or the result of another Promise.
+   * This method call will succeed only if the Promise state was {@link State.Pending},
+   * and it will irreversibly change the Promise state to {@link State.Fulfilled}.
    * 
-   * @param value The value or the result of another promise.
+   * @param value The value or the result of another Promise.
    */
   resolve(value: T | PromiseLike<T>): void {
     this.makeDeferredOperation(State.Fulfilled, deferredPromise => deferredPromise.resolve(value));
   }
 
   /**
-   * Rejects the promise with a provided reason or error.
-   * This method call will succeed only if the promise was in Pending state,
-   * and it will irreversibly change the promise state to Rejected.
+   * Rejects the Promise with a provided reason or error.
+   * This method call will succeed only if the Promise state was {@link State.Pending},
+   * and it will irreversibly change the Promise state to {@link State.Rejected}.
    * 
    * @param reason The reason or error.
    */
@@ -60,10 +60,10 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Attempts to {@link resolve} the promise with a value or the result of another promise.
+   * Attempts to {@link resolve} the Promise with a value or the result of another Promise.
    * If retrieving {@param getValue} result fails, {@link reject} function will be called instead.
    * 
-   * @param getValue A function that returns the value or the result of another promise.
+   * @param getValue A function that returns the value or the result of another Promise.
    */
   tryResolve(getValue: () => T | PromiseLike<T>): void {
     try {
@@ -100,8 +100,8 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-   * resolved value cannot be modified from the callback.
+   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected).
+   * The resolved value cannot be modified from the callback.
    *
    * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
    * @returns A Promise for the completion of the callback.
@@ -111,55 +111,55 @@ export class CompletablePromise<T = any> {
   }
 
   /**
-   * Returns the inner Promise.
+   * Returns the inner Promise instance.
    * 
-   * @returns The inner Promise.
+   * @returns The inner Promise instance.
    */
   get(): Promise<T> {
     return this.promise;
   }
 
   /**
-   * Returns the current promise state.
+   * Returns the current Promise state.
    * 
-   * @returns The current promise state.
+   * @returns The current Promise state.
    */
   getState(): State {
     return this.state;
   }
 
   /**
-   * Returns true if the promise state it is {@link State.Pending}.
+   * Returns true if the Promise state it is {@link State.Pending}.
    * 
-   * @returns whether the promise state it is {@link State.Pending}.
+   * @returns Whether the Promise state it is {@link State.Pending}.
    */
   isPending(): boolean {
     return this.state === State.Pending;
   }
 
   /**
-   * Returns true if the promise state it is {@link State.Fulfilled}.
+   * Returns true if the Promise state it is {@link State.Fulfilled}.
    * 
-   * @returns whether the promise state it is {@link State.Fulfilled}.
+   * @returns Whether the Promise state it is {@link State.Fulfilled}.
    */
   isFulfilled(): boolean {
     return this.state === State.Fulfilled;
   }
 
   /**
-   * Returns true if the promise state it is {@link State.Rejected}.
+   * Returns true if the Promise state it is {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is {@link State.Rejected}.
+   * @returns Whether the Promise state it is {@link State.Rejected}.
    */
   isRejected(): boolean {
     return this.state === State.Rejected;
   }
 
   /**
-   * Returns true if the promise state it is either {@link State.Fulfilled}
+   * Returns true if the Promise state it is either {@link State.Fulfilled}
    * or {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is either {@link State.Fulfilled}
+   * @returns Whether the Promise state it is either {@link State.Fulfilled}
    *          or {@link State.Rejected}.
    */
   isSettled(): boolean {
