@@ -401,9 +401,9 @@ import { State } from "./state";
 type DeferredOperation&lt;T&gt; = (deferredPromise: DeferredPromise&lt;T&gt;) =&gt; void;
 &nbsp;
 /**
- * A {@link Promise} that can be explicitly resolved or rejected.
+ * A Promise that can be explicitly resolved or rejected.
  * 
- * @type T the type of the {@link CompletablePromise}.
+ * @type T The type of the {@link CompletablePromise}.
  */
 export class CompletablePromise&lt;T = any&gt; {
 &nbsp;
@@ -422,8 +422,8 @@ export class CompletablePromise&lt;T = any&gt; {
    * {@link State.Pending}. Then sets the {@link CompletablePromise} state to the
    * specified one.
    * 
-   * @param newState the new state assigned to the {@link CompletablePromise}.
-   * @param deferredOperation the method of the {@link DeferredPromise} that should be called.
+   * @param newState The new state assigned to the {@link CompletablePromise}.
+   * @param deferredOperation The method of the {@link DeferredPromise} that should be called.
    */
   private makeDeferredOperation(newState: State, deferredOperation: DeferredOperation&lt;T&gt;) {
     if (this.isPending()) {
@@ -433,20 +433,20 @@ export class CompletablePromise&lt;T = any&gt; {
   }
 &nbsp;
   /**
-   * Resolves the promise with a value or the result of another promise.
-   * This method call will succeed only if the promise was in Pending state,
-   * and it will irreversibly change the promise state to Fulfilled.
+   * Resolves the Promise with a value or the result of another Promise.
+   * This method call will succeed only if the Promise state was {@link State.Pending},
+   * and it will irreversibly change the Promise state to {@link State.Fulfilled}.
    * 
-   * @param value The value or the result of another promise.
+   * @param value The value or the result of another Promise.
    */
   resolve(value: T | PromiseLike&lt;T&gt;): void {
     this.makeDeferredOperation(State.Fulfilled, deferredPromise =&gt; deferredPromise.resolve(value));
   }
 &nbsp;
   /**
-   * Rejects the promise with a provided reason or error.
-   * This method call will succeed only if the promise was in Pending state,
-   * and it will irreversibly change the promise state to Rejected.
+   * Rejects the Promise with a provided reason or error.
+   * This method call will succeed only if the Promise state was {@link State.Pending},
+   * and it will irreversibly change the Promise state to {@link State.Rejected}.
    * 
    * @param reason The reason or error.
    */
@@ -455,10 +455,10 @@ export class CompletablePromise&lt;T = any&gt; {
   }
 &nbsp;
   /**
-   * Attempts to {@link resolve} the promise with a value or the result of another promise.
+   * Attempts to {@link resolve} the Promise with a value or the result of another Promise.
    * If retrieving {@param getValue} result fails, {@link reject} function will be called instead.
    * 
-   * @param getValue A function that returns the value or the result of another promise.
+   * @param getValue A function that returns the value or the result of another Promise.
    */
   tryResolve(getValue: () =&gt; T | PromiseLike&lt;T&gt;): void {
     try {
@@ -495,8 +495,8 @@ export class CompletablePromise&lt;T = any&gt; {
   }
 &nbsp;
   /**
-   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected). The
-   * resolved value cannot be modified from the callback.
+   * Attaches a callback that is invoked when the Promise is settled (fulfilled or rejected).
+   * The resolved value cannot be modified from the callback.
    *
    * @param onfinally The callback to execute when the Promise is settled (fulfilled or rejected).
    * @returns A Promise for the completion of the callback.
@@ -506,55 +506,55 @@ export class CompletablePromise&lt;T = any&gt; {
   }
 &nbsp;
   /**
-   * Returns the inner Promise.
+   * Returns the inner Promise instance.
    * 
-   * @returns The inner Promise.
+   * @returns The inner Promise instance.
    */
   get(): Promise&lt;T&gt; {
     return this.promise;
   }
 &nbsp;
   /**
-   * Returns the current promise state.
+   * Returns the current Promise state.
    * 
-   * @returns The current promise state.
+   * @returns The current Promise state.
    */
   getState(): State {
     return this.state;
   }
 &nbsp;
   /**
-   * Returns true if the promise state it is {@link State.Pending}.
+   * Returns true if the Promise state it is {@link State.Pending}.
    * 
-   * @returns whether the promise state it is {@link State.Pending}.
+   * @returns Whether the Promise state it is {@link State.Pending}.
    */
   isPending(): boolean {
     return this.state === State.Pending;
   }
 &nbsp;
   /**
-   * Returns true if the promise state it is {@link State.Fulfilled}.
+   * Returns true if the Promise state it is {@link State.Fulfilled}.
    * 
-   * @returns whether the promise state it is {@link State.Fulfilled}.
+   * @returns Whether the Promise state it is {@link State.Fulfilled}.
    */
   isFulfilled(): boolean {
     return this.state === State.Fulfilled;
   }
 &nbsp;
   /**
-   * Returns true if the promise state it is {@link State.Rejected}.
+   * Returns true if the Promise state it is {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is {@link State.Rejected}.
+   * @returns Whether the Promise state it is {@link State.Rejected}.
    */
   isRejected(): boolean {
     return this.state === State.Rejected;
   }
 &nbsp;
   /**
-   * Returns true if the promise state it is either {@link State.Fulfilled}
+   * Returns true if the Promise state it is either {@link State.Fulfilled}
    * or {@link State.Rejected}.
    * 
-   * @returns whether the promise state it is either {@link State.Fulfilled}
+   * @returns Whether the Promise state it is either {@link State.Fulfilled}
    *          or {@link State.Rejected}.
    */
   isSettled(): boolean {
@@ -568,7 +568,7 @@ export class CompletablePromise&lt;T = any&gt; {
             <div class='footer quiet pad2 space-top1 center small'>
                 Code coverage generated by
                 <a href="https://istanbul.js.org/" target="_blank">istanbul</a>
-                at Sun Jan 17 2021 22:06:04 GMT+0000 (Coordinated Universal Time)
+                at Mon Jan 18 2021 22:25:42 GMT+0000 (Coordinated Universal Time)
             </div>
         </div>
         <script src="../prettify.js"></script>
