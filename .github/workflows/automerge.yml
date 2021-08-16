@@ -1,0 +1,28 @@
+name: automerge
+
+on:
+  pull_request:
+    branches:
+      - develop
+  check_suite:
+    types:
+      - completed
+
+jobs:
+  log-github-actor:
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo ${{ github.actor }}
+  automerge:
+    needs: log-github-actor
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: "pascalgn/automerge-action@v0.14.2"
+        env:
+          GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
+          MERGE_LABELS: "dependencies"
+          MERGE_COMMIT_MESSAGE: pull-request-title
+          MERGE_DELETE_BRANCH: true
+          MERGE_METHOD: "rebase"
+          MERGE_RETRY_SLEEP: "60000"
