@@ -13,8 +13,9 @@
   "scripts": {
     "build": "npx tsc",
     "test": "mocha -r ts-node/register test/**/*.spec.ts",
+    "coverage": "node .github/script/generate-coverage.mjs",
+    "doc": "node .github/script/generate-typedoc.mjs",
     "lint": "eslint \"src/**\" \"test/**\"",
-    "travis-deploy": "node deploy/travis-deploy.mjs",
     "prepublishOnly": "npm test",
     "prepare": "npm run build"
   },

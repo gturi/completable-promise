@@ -1,0 +1,76 @@
+name: gh-pages
+on:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  check-for-changes:
+    runs-on: ubuntu-latest
+    outputs:
+      output: ${{ steps.status.outputs.value }}
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+      - run: npm ci
+      - id: status
+        # using a run statement for each command does not work
+        run: |
+          OUT=`node .github/script/check-for-changes-within-24h.mjs "src test gh-pages"`
+          echo "$OUT setup-gh-pages-files job"
+          echo "::set-output name=value::$OUT"
+  setup-gh-pages-files:
+    needs: check-for-changes
+    runs-on: ubuntu-latest
+    if: ${{ needs.check-for-changes.outputs.output == 'run' }}
+    steps:
+      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - run: npm install
+      - run: echo running on branch ${{ env.BRANCH }}
+      - run: npm run doc ${{ env.BRANCH }}
+      - run: npm run coverage ${{ env.BRANCH }}
+      - run: ls gh-pages/${{ env.BRANCH }}
+      - uses: actions/upload-artifact@v2
+        with:
+          name: gh-pages-artifacts
+          path: gh-pages/*
+  update-coveralls:
+    needs: setup-gh-pages-files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: gh-pages-artifacts
+          path: gh-pages
+      - run: ls
+      - run: ls gh-pages
+      - uses: coverallsapp/github-action@master
+        with:
+          github-token: ${{ secrets.GITHUB_TOKEN }}
+          path-to-lcov: gh-pages/${{ env.BRANCH }}/coverage/lcov.info
+  update-gh-pages:
+    needs: setup-gh-pages-files
+    runs-on: ubuntu-latest
+    steps:
+      - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v2
+      - uses: actions/download-artifact@v2
+        with:
+          name: gh-pages-artifacts
+          path: gh-pages
+      - run: ls
+      - run: ls gh-pages
+      - uses: JamesIves/github-pages-deploy-action@4.1.3
+        with:
+          branch: gh-pages
+          folder: gh-pages
+          clean: false
