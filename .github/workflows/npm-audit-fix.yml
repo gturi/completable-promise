@@ -31,7 +31,7 @@ jobs:
           labels: 'dependencies,javascript'
           # repo scoped token is necessary to make the pull request trigger other actions
           # unfortunately this changes the pull request author to the repo owner
-          token: ${{ secrets.URL_BUILDER_GITHUB_TOKEN }}
+          token: ${{ secrets.COMPLETABLE_PROMISE_GITHUB_TOKEN }}
   npm-audit-fix-force:
     runs-on: ubuntu-latest
     steps:
@@ -59,4 +59,4 @@ jobs:
           labels: 'dependencies,javascript'
           # repo scoped token is necessary to make the pull request trigger other actions
           # unfortunately this changes the pull request author to the repo owner
-          token: ${{ secrets.URL_BUILDER_GITHUB_TOKEN }}
+          token: ${{ secrets.COMPLETABLE_PROMISE_GITHUB_TOKEN }}
