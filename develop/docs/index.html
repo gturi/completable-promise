@@ -93,7 +93,11 @@
 							<li><a href="#Mixing-CompletablePromise-and-Promise">Mixing CompletablePromise and Promise</a></li>
 						</ul>
 					</li>
-					<li><a href="#Example">Example</a></li>
+					<li><a href="#Examples">Examples</a><ul>
+							<li><a href="#Callback-to-promise">Callback to promise</a></li>
+							<li><a href="#Asynchronous-tail-recursion">Asynchronous tail recursion</a></li>
+						</ul>
+					</li>
 					<li><a href="#Contributing">Contributing</a></li>
 					<li><a href="#License">License</a></li>
 				</ul>
@@ -114,9 +118,12 @@
 					<h2>Usage</h2>
 				</a>
 				<p>A <code>CompletablePromise</code> can be initialized as follows:</p>
-				<pre><code class="language-js"><span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CompletablePromise</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;completable-promise&quot;</span><span style="color: #000000">;</span>
-
-<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CompletablePromise</span><span style="color: #000000">();</span>
+				<pre><code class="language-js"><span style="color: #008000">// old CommonJS syntax</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">CompletablePromise</span><span style="color: #000000"> = </span><span style="color: #795E26">require</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;completable-promise&#039;</span><span style="color: #000000">).</span><span style="color: #001080">CompletablePromise</span><span style="color: #000000">;</span>
+<span style="color: #008000">// new ES6 syntax</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CompletablePromise</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&quot;completable-promise&quot;</span><span style="color: #000000">;</span>
+</code></pre>
+				<pre><code class="language-js"><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CompletablePromise</span><span style="color: #000000">();</span>
 
 <span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
 <span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #001080">value</span><span style="color: #000000">);</span>
@@ -257,8 +264,11 @@
 <span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;foo&#039;</span><span style="color: #000000">);</span>
 </code></pre>
 				<p><a href="#CompletablePromise">Back to top</a></p>
-				<a href="#example" id="example" style="color: inherit; text-decoration: none;">
-					<h2>Example</h2>
+				<a href="#examples" id="examples" style="color: inherit; text-decoration: none;">
+					<h2>Examples</h2>
+				</a>
+				<a href="#callback-to-promise" id="callback-to-promise" style="color: inherit; text-decoration: none;">
+					<h3>Callback to promise</h3>
 				</a>
 				<p>A possible use case of this library is to promisify a function that is based on the callback approach, avoiding the callback hell/pyramid of doom problem.</p>
 				<p>The following example shows how to prompt multiple times the user for some input. Even if the <code>CompletablePromise</code> approach is a bit more elaborated, its result is surely clearer thanks to the chaining of the promises.</p>
@@ -310,6 +320,55 @@
 <span style="color: #000000">    </span><span style="color: #008000">// perform other operations with the third input</span>
 <span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">));</span>
 </code></pre>
+				<p><a href="#CompletablePromise">Back to top</a></p>
+				<a href="#asynchronous-tail-recursion" id="asynchronous-tail-recursion" style="color: inherit; text-decoration: none;">
+					<h3>Asynchronous tail recursion</h3>
+				</a>
+				<p>This library can also be used to achieve asynchronous tail recursion. This is useful in situations where an event will happen but it is not known with precision when. For example, you may need to run a command only after a service is ready and a push based approach is not available/possible:</p>
+				<pre><code class="language-js"><span style="color: #008000">// server</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">express</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;express&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">app</span><span style="color: #000000"> = </span><span style="color: #795E26">express</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;/status&#039;</span><span style="color: #000000">, (</span><span style="color: #001080">req</span><span style="color: #000000">, </span><span style="color: #001080">res</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">  </span><span style="color: #001080">res</span><span style="color: #000000">.</span><span style="color: #795E26">send</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;ready&#039;</span><span style="color: #000000">)</span>
+<span style="color: #000000">});</span>
+
+<span style="color: #008000">// simulates an intialization setup which lasts between 10 to 30 seconds</span>
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">initializationDelay</span><span style="color: #000000"> = </span><span style="color: #267F99">Math</span><span style="color: #000000">.</span><span style="color: #795E26">floor</span><span style="color: #000000">(</span><span style="color: #267F99">Math</span><span style="color: #000000">.</span><span style="color: #795E26">random</span><span style="color: #000000"> * </span><span style="color: #098658">20000</span><span style="color: #000000">) + </span><span style="color: #098658">10000</span><span style="color: #000000">;</span>
+<span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">port</span><span style="color: #000000"> = </span><span style="color: #098658">3000</span><span style="color: #000000">;</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">`app listening at http://localhost:</span><span style="color: #0000FF">${</span><span style="color: #098658">3000</span><span style="color: #0000FF">}</span><span style="color: #A31515">`</span><span style="color: #000000">);</span>
+<span style="color: #000000">    </span><span style="color: #001080">app</span><span style="color: #000000">.</span><span style="color: #795E26">listen</span><span style="color: #000000">(</span><span style="color: #001080">port</span><span style="color: #000000">);</span>
+<span style="color: #000000">}, </span><span style="color: #001080">initializationDelay</span><span style="color: #000000">);</span>
+</code></pre>
+				<pre><code class="language-js"><span style="color: #008000">// client</span>
+<span style="color: #AF00DB">import</span><span style="color: #000000"> </span><span style="color: #001080">axios</span><span style="color: #000000"> </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;axios&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #AF00DB">import</span><span style="color: #000000"> { </span><span style="color: #001080">CompletablePromise</span><span style="color: #000000"> } </span><span style="color: #AF00DB">from</span><span style="color: #000000"> </span><span style="color: #A31515">&#039;completable-promise&#039;</span><span style="color: #000000">;</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #0070C1">completablePromise</span><span style="color: #000000"> = </span><span style="color: #0000FF">new</span><span style="color: #000000"> </span><span style="color: #795E26">CompletablePromise</span><span style="color: #000000">();</span>
+
+<span style="color: #0000FF">const</span><span style="color: #000000"> </span><span style="color: #795E26">waitDeployment</span><span style="color: #000000"> = () </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">trace</span><span style="color: #000000">();</span>
+<span style="color: #000000">    </span><span style="color: #008000">// api exposed by the server to determine whether it is ready</span>
+<span style="color: #000000">    </span><span style="color: #001080">axios</span><span style="color: #000000">.</span><span style="color: #795E26">get</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;http://localhost:3000/status&#039;</span><span style="color: #000000">).</span><span style="color: #795E26">then</span><span style="color: #000000">((</span><span style="color: #001080">response</span><span style="color: #000000">) </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">resolve</span><span style="color: #000000">(</span><span style="color: #001080">response</span><span style="color: #000000">);</span>
+<span style="color: #000000">    }).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">e</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">        </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">log</span><span style="color: #000000">(</span><span style="color: #A31515">&#039;service is not ready, checking once again its state after 2 seconds&#039;</span><span style="color: #000000">);</span>
+<span style="color: #000000">        </span><span style="color: #795E26">setTimeout</span><span style="color: #000000">(() </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> </span><span style="color: #795E26">waitDeployment</span><span style="color: #000000">(), </span><span style="color: #098658">2000</span><span style="color: #000000">);</span>
+<span style="color: #000000">    });</span>
+<span style="color: #000000">}</span>
+
+<span style="color: #795E26">waitDeployment</span><span style="color: #000000">();</span>
+
+<span style="color: #001080">completablePromise</span><span style="color: #000000">.</span><span style="color: #795E26">then</span><span style="color: #000000">(</span><span style="color: #001080">result</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> {</span>
+<span style="color: #000000">    </span><span style="color: #008000">// run code after the service is ready</span>
+<span style="color: #000000">}).</span><span style="color: #795E26">catch</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000"> </span><span style="color: #0000FF">=&gt;</span><span style="color: #000000"> { </span>
+<span style="color: #000000">    </span><span style="color: #001080">console</span><span style="color: #000000">.</span><span style="color: #795E26">error</span><span style="color: #000000">(</span><span style="color: #001080">reason</span><span style="color: #000000">);</span>
+<span style="color: #000000">});</span>
+</code></pre>
+				<p>In the example above, the stack trace remains constant even though <code>waitDeployment</code> function is recursive. </p>
 				<p><a href="#CompletablePromise">Back to top</a></p>
 				<a href="#contributing" id="contributing" style="color: inherit; text-decoration: none;">
 					<h2>Contributing</h2>
