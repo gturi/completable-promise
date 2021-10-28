@@ -2,21 +2,25 @@ name: lint-and-test
 on: [push, pull_request]
 
 jobs:
-  build:
+  lint:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 'lts/*'
+      - run: npm ci
+      - run: npm run lint
+  test:
     strategy:
       matrix:
         os: [windows, macos, ubuntu]
-        node: ['10', '12', '14']
+        node: ['10', '12', 'lts/*']
     runs-on: ${{ matrix.os }}-latest
     steps:
-      - name: Set git to use LF
-        run: |
-          git config --global core.autocrlf false
-          git config --global core.eol native
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
           node-version: ${{ matrix.node }}
-      - run: npm install
-      - run: npm run lint
+      - run: npm ci
       - run: npm test

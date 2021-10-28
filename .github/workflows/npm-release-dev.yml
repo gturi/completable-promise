@@ -14,7 +14,7 @@ jobs:
           ref: develop
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/*'
       - run: npm ci
       - id: status
         # using a run statement for each command does not work
@@ -22,7 +22,7 @@ jobs:
           OUT=`node .github/script/check-for-changes-within-24h.mjs "src package.json package-lock.json"`
           echo "$OUT build step"
           echo "::set-output name=value::$OUT"
-  build:
+  create-dev-version:
     needs: check-for-changes
     runs-on: ubuntu-latest
     outputs:
@@ -34,17 +34,14 @@ jobs:
           ref: develop
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
-      - run: npm ci
-      - run: npm run lint
-      - run: npm test
+          node-version: 'lts/*'
       - id: version
         run: |
           DEV_VERSION=`node .github/script/create-develop-version.mjs`
           echo "library dev version $DEV_VERSION"
           echo "::set-output name=value::$DEV_VERSION"
   npm-registry-release:
-    needs: build
+    needs: create-dev-version
     runs-on: ubuntu-latest
     permissions:
       contents: read
@@ -56,7 +53,7 @@ jobs:
       # setup to publish to npm registry
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       # temporary modifies package.json version (the timestamp is used to get a uuid)

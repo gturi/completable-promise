@@ -2,8 +2,8 @@
 
 | branch | build | coverage |
 | --- | --- | --- |
-| main | [![Build Status](https://travis-ci.com/FlamingTuri/completable-promise.svg?branch=main)](https://travis-ci.com/FlamingTuri/completable-promise) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=main) |
-| develop | [![Build Status](https://travis-ci.com/FlamingTuri/completable-promise.svg?branch=develop)](https://travis-ci.com/FlamingTuri/completable-promise) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=develop) |
+| main | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=main) |
+| develop | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=develop) |
 
 <br/>
 
@@ -16,7 +16,9 @@ CompletablePromise allows to create a Promise instance that does not start its r
     - [CompletablePromise states](#CompletablePromise-states)
     - [CompletablePromise antipattern solution](#CompletablePromise-antipattern-solution)
     - [Mixing CompletablePromise and Promise](#Mixing-CompletablePromise-and-Promise)
-- [Example](#Example)
+- [Examples](#Examples)
+    - [Callback to promise](#Callback-to-promise)
+    - [Asynchronous tail recursion](#Asynchronous-tail-recursion)
 - [Contributing](#Contributing)
 - [License](#License)
 
@@ -44,8 +46,13 @@ $ yarn add completable-promise
 A `CompletablePromise` can be initialized as follows:
 
 ```js
+// old CommonJS syntax
+const CompletablePromise = require('completable-promise').CompletablePromise;
+// new ES6 syntax
 import { CompletablePromise } from "completable-promise";
+```
 
+```js
 const completablePromise = new CompletablePromise();
 
 completablePromise.then(value => {
@@ -216,7 +223,9 @@ completablePromise.resolve('foo');
 
 [Back to top](#CompletablePromise)
 
-## Example
+## Examples
+
+### Callback to promise
 
 A possible use case of this library is to promisify a function that is based on the callback approach, avoiding the callback hell/pyramid of doom problem.
 
@@ -275,6 +284,61 @@ readUserInput('Step 1) Insert a value: ').then(value => {
     // perform other operations with the third input
 }).catch(reason => console.error(reason));
 ```
+
+[Back to top](#CompletablePromise)
+
+### Asynchronous tail recursion
+
+This library can also be used to achieve asynchronous tail recursion. This is useful in situations where an event will happen but it is not known with precision when. For example, you may need to run a command only after a service is ready and a push based approach is not available/possible:
+
+```js
+// server
+import express from 'express';
+
+const app = express();
+
+app.get('/status', (req, res) => {
+  res.send('ready')
+});
+
+// simulates an intialization setup which lasts between 10 to 30 seconds
+const initializationDelay = Math.floor(Math.random * 20000) + 10000;
+setTimeout(() => {
+    const port = 3000;
+    console.log(`app listening at http://localhost:${3000}`);
+    app.listen(port);
+}, initializationDelay);
+```
+
+```js
+// client
+import axios from 'axios';
+
+import { CompletablePromise } from 'completable-promise';
+
+const completablePromise = new CompletablePromise();
+
+const waitDeployment = () => {
+    console.trace();
+    // api exposed by the server to determine whether it is ready
+    axios.get('http://localhost:3000/status').then((response) => {
+        completablePromise.resolve(response);
+    }).catch(e => {
+        console.log('service is not ready, checking once again its state after 2 seconds');
+        setTimeout(() => waitDeployment(), 2000);
+    });
+}
+
+waitDeployment();
+
+completablePromise.then(result => {
+    // run code after the service is ready
+}).catch(reason => { 
+    console.error(reason);
+});
+```
+
+In the example above, the stack trace remains constant even though `waitDeployment` function is recursive. 
 
 [Back to top](#CompletablePromise)
 

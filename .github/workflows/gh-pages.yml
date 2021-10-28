@@ -14,7 +14,7 @@ jobs:
       - uses: actions/checkout@v2
       - uses: actions/setup-node@v2
         with:
-          node-version: '14'
+          node-version: 'lts/*'
       - run: npm ci
       - id: status
         # using a run statement for each command does not work
@@ -32,7 +32,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - run: npm install
+      - run: npm ci
       - run: echo running on branch ${{ env.BRANCH }}
       - run: npm run doc ${{ env.BRANCH }}
       - run: npm run coverage ${{ env.BRANCH }}
@@ -69,7 +69,7 @@ jobs:
           path: gh-pages
       - run: ls
       - run: ls gh-pages
-      - uses: JamesIves/github-pages-deploy-action@4.1.4
+      - uses: JamesIves/github-pages-deploy-action@4.1.5
         with:
           branch: gh-pages
           folder: gh-pages
