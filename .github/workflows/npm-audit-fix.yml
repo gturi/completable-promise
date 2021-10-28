@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - run: npm install
+      - run: npm ci
       - run: npm audit fix
       - run: |
           if git diff-index --quiet HEAD --; \
@@ -41,7 +41,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 'lts/*'
-      - run: npm install
+      - run: npm ci
       - run: npm audit fix --force
       - run: |
           if git diff-index --quiet HEAD --; \
