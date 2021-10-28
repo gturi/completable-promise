@@ -2,8 +2,8 @@
 
 | branch | build | coverage |
 | --- | --- | --- |
-| main | [![Build Status](https://travis-ci.com/FlamingTuri/completable-promise.svg?branch=main)](https://travis-ci.com/FlamingTuri/completable-promise) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=main) |
-| develop | [![Build Status](https://travis-ci.com/FlamingTuri/completable-promise.svg?branch=develop)](https://travis-ci.com/FlamingTuri/completable-promise) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=develop) |
+| main | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=main) |
+| develop | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=develop) |
 
 <br/>
 

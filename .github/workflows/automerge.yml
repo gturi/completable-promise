@@ -24,5 +24,5 @@ jobs:
           MERGE_LABELS: "dependencies"
           MERGE_COMMIT_MESSAGE: pull-request-title
           MERGE_DELETE_BRANCH: true
-          MERGE_METHOD: "rebase"
+          MERGE_METHOD: "merge"
           MERGE_RETRY_SLEEP: "60000"
