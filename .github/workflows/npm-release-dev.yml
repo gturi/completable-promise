@@ -20,7 +20,7 @@ jobs:
         # using a run statement for each command does not work
         run: |
           OUT=`node .github/script/check-for-changes-within-24h.mjs "src package.json package-lock.json"`
-          echo "$OUT build step"
+          echo "$OUT check-for-changes step"
           echo "::set-output name=value::$OUT"
   create-dev-version:
     needs: check-for-changes
@@ -57,7 +57,7 @@ jobs:
           registry-url: 'https://registry.npmjs.org'
       - run: npm ci
       # temporary modifies package.json version (the timestamp is used to get a uuid)
-      - run: npm version ${{ needs.build.outputs.version }} --no-git-tag-version
+      - run: npm version ${{ needs.create-dev-version.outputs.version }} --no-git-tag-version
       - run: npm publish --access public --tag dev
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
