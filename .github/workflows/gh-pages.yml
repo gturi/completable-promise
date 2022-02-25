@@ -12,7 +12,7 @@ jobs:
       output: ${{ steps.status.outputs.value }}
     steps:
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3.0.0
         with:
           node-version: 'lts/*'
       - run: npm ci
@@ -29,7 +29,7 @@ jobs:
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3.0.0
         with:
           node-version: 'lts/*'
       - run: npm ci
