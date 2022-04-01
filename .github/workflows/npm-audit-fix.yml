@@ -20,7 +20,7 @@ jobs:
           then echo "CHANGES=false" >> $GITHUB_ENV; \
           else echo "CHANGES=true" >> $GITHUB_ENV; \
           fi
-      - uses: peter-evans/create-pull-request@v3
+      - uses: peter-evans/create-pull-request@v4.0.1
         if: ${{ env.CHANGES == 'true' }}
         with:
           title: 'npm audit fix'
@@ -48,7 +48,7 @@ jobs:
           then echo "CHANGES_FORCE=false" >> $GITHUB_ENV; \
           else echo "CHANGES_FORCE=true" >> $GITHUB_ENV; \
           fi
-      - uses: peter-evans/create-pull-request@v3
+      - uses: peter-evans/create-pull-request@v4.0.1
         if: ${{ env.CHANGES_FORCE == 'true' }}
         with:
           title: 'npm audit fix --force'
