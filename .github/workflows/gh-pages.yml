@@ -47,7 +47,7 @@ jobs:
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
@@ -63,7 +63,7 @@ jobs:
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
