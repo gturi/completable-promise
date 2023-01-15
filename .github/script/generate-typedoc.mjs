@@ -8,5 +8,5 @@ const options = { stdio: [0, 1, 2] };
 
 // generate typedoc
 const typedocDir = `${deployDir}/docs/`;
-execSync(`npx typedoc --out ${typedocDir} src/`, options);
-console.log(`Coverage generated at ${process.cwd()}/${typedocDir}`);
+execSync(`npx typedoc --out ${typedocDir} --entryPointStrategy expand --entryPoints ./src`, options);
+console.log(`Typedoc generated at ${process.cwd()}/${typedocDir}`);

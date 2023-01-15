@@ -37,7 +37,7 @@ jobs:
       - run: npm run doc ${{ env.BRANCH }}
       - run: npm run coverage ${{ env.BRANCH }}
       - run: ls gh-pages/${{ env.BRANCH }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages/*
@@ -47,7 +47,7 @@ jobs:
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
@@ -63,7 +63,7 @@ jobs:
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
       - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
