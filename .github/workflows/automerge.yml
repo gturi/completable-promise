@@ -18,7 +18,7 @@ jobs:
     if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
     runs-on: ubuntu-latest
     steps:
-      - uses: "pascalgn/automerge-action@v0.14.3"
+      - uses: "pascalgn/automerge-action@v0.15.5"
         env:
           GITHUB_TOKEN: "${{ secrets.GITHUB_TOKEN }}"
           MERGE_LABELS: "dependencies"
