@@ -1,6 +1,6 @@
 {
   "name": "completable-promise",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "CompletablePromise library allows to create a Promise instance that does not start its resolution upon its declaration.",
   "keywords": [
     "completable-promise",
@@ -34,19 +34,19 @@
   "homepage": "https://github.com/FlamingTuri/completable-promise#readme",
   "devDependencies": {
     "@types/chai": "^4.2.14",
-    "@types/mocha": "^9.0.0",
-    "@typescript-eslint/eslint-plugin": "^4.12.0",
-    "@typescript-eslint/parser": "^4.12.0",
+    "@types/mocha": "^10.0.1",
+    "@typescript-eslint/eslint-plugin": "^5.39.0",
+    "@typescript-eslint/parser": "^5.39.0",
     "chai": "^4.2.0",
     "coveralls": "^3.1.0",
-    "eslint": "^7.17.0",
-    "eslint-plugin-import": "^2.22.1",
-    "mocha": "^9.1.2",
+    "eslint": "^8.24.0",
+    "eslint-plugin-import": "^2.26.0",
+    "mocha": "^10.2.0",
     "mocha-lcov-reporter": "^1.3.0",
     "nyc": "^15.1.0",
     "ts-node": "^10.2.0",
-    "typedoc": "^0.22.7",
-    "typescript": "^4.1.3"
+    "typedoc": "^0.23.24",
+    "typescript": "^4.8.3"
   },
   "publishConfig": {
     "access": "public"

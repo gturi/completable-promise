@@ -11,8 +11,8 @@ jobs:
     outputs:
       output: ${{ steps.status.outputs.value }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
       - run: npm ci
@@ -28,8 +28,8 @@ jobs:
     if: ${{ needs.check-for-changes.outputs.output == 'run' }}
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
       - run: npm ci
@@ -37,7 +37,7 @@ jobs:
       - run: npm run doc ${{ env.BRANCH }}
       - run: npm run coverage ${{ env.BRANCH }}
       - run: ls gh-pages/${{ env.BRANCH }}
-      - uses: actions/upload-artifact@v2
+      - uses: actions/upload-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages/*
@@ -46,8 +46,8 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
@@ -62,14 +62,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - run: echo "BRANCH=${GITHUB_REF##*/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v2
-      - uses: actions/download-artifact@v2
+      - uses: actions/checkout@v3
+      - uses: actions/download-artifact@v3
         with:
           name: gh-pages-artifacts
           path: gh-pages
       - run: ls
       - run: ls gh-pages
-      - uses: JamesIves/github-pages-deploy-action@4.1.5
+      - uses: JamesIves/github-pages-deploy-action@v4.4.1
         with:
           branch: gh-pages
           folder: gh-pages

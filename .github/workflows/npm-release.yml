@@ -10,9 +10,9 @@ jobs:
       contents: read
       packages: write 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v3
       # Setup to publish to npm registry
-      - uses: actions/setup-node@v2
+      - uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
           registry-url: 'https://registry.npmjs.org'
