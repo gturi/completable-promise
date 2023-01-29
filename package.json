@@ -1,6 +1,6 @@
 {
   "name": "completable-promise",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "CompletablePromise library allows to create a Promise instance that does not start its resolution upon its declaration.",
   "keywords": [
     "completable-promise",
@@ -47,6 +47,9 @@
     "ts-node": "^10.2.0",
     "typedoc": "^0.23.24",
     "typescript": "^4.8.3"
+  },
+  "optionalDependencies": {
+    "fsevents": "~2.3.2"
   },
   "publishConfig": {
     "access": "public"
