@@ -1,6 +1,6 @@
 {
   "name": "completable-promise",
-  "version": "1.2.0-dev",
+  "version": "1.2.0",
   "description": "CompletablePromise library allows to create a Promise instance that does not start its resolution upon its declaration.",
   "keywords": [
     "completable-promise",
