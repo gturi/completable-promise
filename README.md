@@ -2,8 +2,8 @@
 
 | branch | build | coverage |
 | --- | --- | --- |
-| main | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=main) |
-| develop | [![lint-and-test](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/FlamingTuri/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/FlamingTuri/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/FlamingTuri/completable-promise?branch=develop) |
+| main | [![lint-and-test](https://github.com/gturi/completable-promise/actions/workflows/lint-and-test.yml/badge.svg)](https://github.com/gturi/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/gturi/completable-promise/badge.svg?branch=main)](https://coveralls.io/github/gturi/completable-promise?branch=main) |
+| develop | [![lint-and-test](https://github.com/gturi/completable-promise/actions/workflows/lint-and-test.yml/badge.svg?branch=develop)](https://github.com/gturi/completable-promise/actions/workflows/lint-and-test.yml) | [![Coverage Status](https://coveralls.io/repos/github/gturi/completable-promise/badge.svg?branch=develop)](https://coveralls.io/github/gturi/completable-promise?branch=develop) |
 
 <br/>
 
@@ -26,17 +26,17 @@ CompletablePromise allows to create a Promise instance that does not start its r
 
 Using npm:
 ```
-$ npm install completable-promise
+npm install completable-promise
 ```
 
 Using bower:
 ```
-$ bower install completable-promise
+bower install completable-promise
 ```
 
 Using yarn:
 ```
-$ yarn add completable-promise
+yarn add completable-promise
 ```
 
 [Back to top](#CompletablePromise)
