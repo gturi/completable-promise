@@ -24,14 +24,14 @@
   ],
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/FlamingTuri/completable-promise.git"
+    "url": "git+https://github.com/gturi/completable-promise.git"
   },
   "author": "Giacomo Venturini",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/FlamingTuri/completable-promise/issues"
+    "url": "https://github.com/gturi/completable-promise/issues"
   },
-  "homepage": "https://github.com/FlamingTuri/completable-promise#readme",
+  "homepage": "https://github.com/gturi/completable-promise#readme",
   "devDependencies": {
     "@types/chai": "^4.2.14",
     "@types/mocha": "^10.0.1",

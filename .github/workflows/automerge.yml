@@ -15,7 +15,7 @@ jobs:
       - run: echo ${{ github.actor }}
   automerge:
     needs: log-github-actor
-    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'FlamingTuri' }}
+    if: ${{ github.actor == 'dependabot[bot]' || github.actor == 'gturi' }}
     runs-on: ubuntu-latest
     steps:
       - uses: "pascalgn/automerge-action@v0.15.5"
