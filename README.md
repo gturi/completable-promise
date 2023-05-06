@@ -26,17 +26,17 @@ CompletablePromise allows to create a Promise instance that does not start its r
 
 Using npm:
 ```
-$ npm install completable-promise
+npm install completable-promise
 ```
 
 Using bower:
 ```
-$ bower install completable-promise
+bower install completable-promise
 ```
 
 Using yarn:
 ```
-$ yarn add completable-promise
+yarn add completable-promise
 ```
 
 [Back to top](#CompletablePromise)
